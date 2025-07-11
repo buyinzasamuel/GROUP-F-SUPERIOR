@@ -35,6 +35,25 @@ class TourPackage(db.Model):
     user = db.relationship('User', backref='tour_packages', lazy=True)  # Relationship with User model
     tour_package = db.relationship('TourPackage', backref='bookings', lazy=True)  # Relationship with TourPackage model
 
+class Review(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    tour_package_id = db.Column(db.Integer, db.ForeignKey('tour_package.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
+    comment = db.Column(db.Text, nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    tour_package = db.relationship('TourPackage', backref='reviews')
+    user = db.relationship('User', backref='reviews')
+
+class Inquiry(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150), nullable=False)
+    email = db.Column(db.String(150), nullable=False)
+    message = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    
     def __init__(self, user_id, tour_package_id, full_name, email, phone):
         self.user_id = user_id
         self.tour_package_id = tour_package_id

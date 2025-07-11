@@ -1,9 +1,11 @@
 from flask import render_template, redirect, url_for, flash, request
 from app import app, db
-from models import User, TourPackage, Booking # type: ignore
-from forms import RegistrationForm, LoginForm, TourPackageForm, BookingForm
+from models import User, TourPackage, Booking, Inquiry, Review # type: ignore
+from forms import RegistrationForm, LoginForm, TourPackageForm, BookingForm, ReviewForm, InquiryForm
 from flask_login import login_user, current_user, logout_user, login_required # type: ignore
 from flask_mail import Mail, Message # type: ignore
+import stripe # type: ignore
+from flask import jsonify # type: ignore
 
 mail = Mail(app)
 
@@ -75,3 +77,69 @@ def tours():
     tour_packages = TourPackage.query.all()
     return render_template('tour_list.html', tours=tour_packages)
    
+stripe.api_key = app.config['STRIPE_SECRET_KEY']  # Set Stripe secret key for payment processing
+
+
+@app.route('/pay/<int:booking_id>', methods=['POST'])
+@login_required
+def pay(booking_id):
+    booking = Booking.query.get_or_404(booking_id)
+    amount = booking.tour_package.price * 100  # Amount in cents
+
+    try:
+        # Create a new charge
+        charge = stripe.Charge.create(
+            amount=amount,
+            currency='usd',
+            description=f'Booking for {booking.tour_package.title}',
+            source=request.form['stripeToken']
+        )
+        # Update booking status
+        booking.status = 'Paid'
+        db.session.commit()
+        return jsonify({'status': 'success', 'charge_id': charge.id})
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)})
+
+   
+@app.route('/review/<int:tour_id>', methods=['POST'])
+@login_required
+def submit_review(tour_id):
+    form = ReviewForm()
+    if form.validate_on_submit():
+        review = Review(
+            tour_package_id=tour_id,
+            user_id=current_user.id,
+            rating=form.rating.data,
+            comment=form.comment.data
+        )
+        db.session.add(review)
+        db.session.commit()
+        flash('Your review has been submitted!', 'success')
+        return redirect(url_for('tour_detail', tour_id=tour_id))
+    return redirect(url_for('tour_detail', tour_id=tour_id))   
+
+@app.route('/inquiry', methods=['GET', 'POST'])
+def inquiry():
+    form = InquiryForm()
+    if form.validate_on_submit():
+        inquiry = Inquiry(
+            name=form.name.data,
+            email=form.email.data,
+            message=form.message.data
+        )
+        db.session.add(inquiry)
+        db.session.commit()
+        send_inquiry_email(inquiry)
+        flash('Your inquiry has been sent!', 'success')
+        return redirect(url_for('home'))
+    return render_template('inquiry.html', form=form)
+
+def send_inquiry_email(inquiry):
+    msg = Message('New Inquiry', sender='your_email@example.com', recipients=['admin@example.com'])
+    msg.body = f'''
+    New Inquiry from {inquiry.name}:
+    Email: {inquiry.email}
+    Message: {inquiry.message}
+    '''
+    mail.send(msg)

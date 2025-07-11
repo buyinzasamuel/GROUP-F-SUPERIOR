@@ -1,0 +1,1 @@
+average_rating = db.session.query(db.func.avg(Review.rating)).filter_by(tour_package_id=tour.id).scalar()

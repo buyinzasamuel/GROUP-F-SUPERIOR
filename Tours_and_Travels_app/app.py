@@ -20,3 +20,4 @@ login_manager.login_view = 'login'  #Set the login view endpoint and redirect to
 
 #Import routes after initializing app, db, migrate, and login_manager to avoid circular imports
 from routes import *  # type: ignore
+

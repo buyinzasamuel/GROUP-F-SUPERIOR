@@ -19,3 +19,5 @@ class Config:
     #Make sure this folder exists and is writable by the application
     UPLOAD_FOLDER = 'static/uploads'
     
+    STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY') or 'your_stripe_public_key'
+    STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY') or 'your_stripe_secret_key'

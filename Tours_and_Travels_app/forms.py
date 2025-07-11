@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm # type: ignore
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField, FloatField # type: ignore
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, FloatField, IntegerField # type: ignore
 from wtforms.validators import DataRequired, Email, EqualTo # type: ignore
+from wtforms import DecimalField # type: ignore
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -28,3 +29,19 @@ class BookingForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     phone = StringField('Phone', validators=[DataRequired()])
     submit = SubmitField('Book Now')
+    
+class PaymentForm(FlaskForm):
+    amount = DecimalField('Amount', validators=[DataRequired()])
+    currency = StringField('Currency', validators=[DataRequired()])
+    submit = SubmitField('Pay Now')
+
+class ReviewForm(FlaskForm):
+    rating = IntegerField('Rating (1-5)', validators=[DataRequired()])
+    comment = TextAreaField('Comment')
+    submit = SubmitField('Submit Review')
+    
+class InquiryForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    message = TextAreaField('Message', validators=[DataRequired()])
+    submit = SubmitField('Send Inquiry')    
