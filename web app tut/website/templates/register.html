@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Account</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .form-container {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+        
+        input:focus {
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+        
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        .password-toggle {
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="form-container bg-white rounded-lg max-w-md w-full p-8">
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">Create Your Account</h1>
+            <p class="text-gray-600">Join our community now</p>
+        </div>
+        
+        <form id="signupForm" class="space-y-4">
+            <!-- Name Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">First Name *</label>
+                    <input type="text" id="firstName" name="firstName" required 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <div id="firstNameError" class="error-message hidden">Please enter your first name</div>
+                </div>
+                <div>
+                    <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">Last Name *</label>
+                    <input type="text" id="lastName" name="lastName" required 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <div id="lastNameError" class="error-message hidden">Please enter your last name</div>
+                </div>
+            </div>
+            
+            <!-- Email -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                <input type="email" id="email" name="email" required 
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <div id="emailError" class="error-message hidden">Please enter a valid email address</div>
+            </div>
+            
+            <!-- Phone -->
+            <div>
+                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                <input type="tel" id="phone" name="phone" 
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <div id="phoneError" class="error-message hidden">Please enter a valid phone number</div>
+            </div>
+            
+            <!-- Date of Birth -->
+            <div>
+                <label for="dob" class="block text-sm font-medium text-gray-700 mb-1">Date of Birth *</label>
+                <input type="date" id="dob" name="dob" required 
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <div id="dobError" class="error-message hidden">Please enter your date of birth</div>
+            </div>
+            
+            <!-- Password -->
+            <div class="relative">
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password *</label>
+                <input type="password" id="password" name="password" required 
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <button type="button" onclick="togglePassword('password')" 
+                        class="absolute password-toggle bg-transparent text-gray-500 hover:text-gray-700">
+                    Show
+                </button>
+                <div id="passwordError" class="error-message hidden">Password must be at least 8 characters</div>
+                <div class="text-xs text-gray-500 mt-1">Minimum 8 characters</div>
+            </div>
+            
+            <!-- Confirm Password -->
+            <div class="relative">
+                <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password *</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required 
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <button type="button" onclick="togglePassword('confirmPassword')" 
+                        class="absolute password-toggle bg-transparent text-gray-500 hover:text-gray-700">
+                    Show
+                </button>
+                <div id="confirmPasswordError" class="error-message hidden">Passwords don't match</div>
+            </div>
+            
+            <!-- Terms and Submit -->
+            <div class="flex items-start">
+                <div class="flex items-center h-5">
+                    <input id="terms" name="terms" type="checkbox" required
+                           class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                </div>
+                <div class="ml-3 text-sm">
+                    <label for="terms" class="font-medium text-gray-700">
+                        I agree to the <a href="#" class="text-indigo-600 hover:text-indigo-500">Terms of Service</a> and 
+                        <a href="#" class="text-indigo-600 hover:text-indigo-500">Privacy Policy</a>
+                    </label>
+                </div>
+            </div>
+            
+            <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Create Account
+            </button>
+            
+            <div class="text-sm text-center text-gray-600">
+                Already have an account? <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Sign in</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Toggle password visibility
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const button = field.nextElementSibling;
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                button.textContent = 'Hide';
+            } else {
+                field.type = 'password';
+                button.textContent = 'Show';
+            }
+        }
+        
+        // Form validation
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let isValid = true;
+            
+            // Reset error messages
+            document.querySelectorAll('.error-message').forEach(el => el.classList.add('hidden'));
+            
+            // Validate first name
+            const firstName = document.getElementById('firstName').value.trim();
+            if (!firstName) {
+                document.getElementById('firstNameError').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // Validate last name
+            const lastName = document.getElementById('lastName').value.trim();
+            if (!lastName) {
+                document.getElementById('lastNameError').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // Validate email
+            const email = document.getElementById('email').value.trim();
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                document.getElementById('emailError').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // Validate password
+            const password = document.getElementById('password').value;
+            if (password.length < 8) {
+                document.getElementById('passwordError').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // Validate password match
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            if (password !== confirmPassword) {
+                document.getElementById('confirmPasswordError').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // Validate date of birth
+            const dob = document.getElementById('dob').value;
+            if (!dob) {
+                document.getElementById('dobError').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // Validate terms checkbox
+            if (!document.getElementById('terms').checked) {
+                isValid = false;
+            }
+            
+            // Submit if valid
+            if (isValid) {
+                // Show success or redirect in a real application
+                alert('Account creation successful!');
+                // form.submit(); // Uncomment to actually submit the form
+            }
+        });
+    </script>
+</body>
+</html>
+
