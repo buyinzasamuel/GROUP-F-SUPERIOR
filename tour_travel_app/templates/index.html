@@ -1,0 +1,69 @@
+{% extends "base.html" %} {% block content %}
+<div class="hero-section bg-light p-5 rounded-lg mb-5">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h1 class="display-4">Explore the World with Us</h1>
+            <p class="lead">Discover amazing destinations and create unforgettable memories.</p>
+            <a href="{{ url_for('tour_list') }}" class="btn btn-primary btn-lg">Browse Tours</a>
+        </div>
+        <div class="col-md-6">
+            <img src="{{ url_for('static', filename='images/hero.jpg') }}" alt="Travel" class="img-fluid rounded">
+        </div>
+    </div>
+</div>
+
+<section class="featured-tours mb-5">
+    <h2 class="text-center mb-4">Featured Tours</h2>
+    <div class="row">
+        {% for tour in tours %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="{{ url_for('static', filename='images/' + tour.image) }}" class="card-img-top" alt="{{ tour.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ tour.title }}</h5>
+                    <p class="card-text">{{ tour.description[:100] }}...</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge bg-primary">{{ tour.duration }} days</span>
+                        <span class="text-muted">${{ tour.price }}</span>
+                    </div>
+                </div>
+                <div class="card-footer bg-white">
+                    <a href="{{ url_for('tour_detail', tour_id=tour.id) }}" class="btn btn-sm btn-outline-primary">View Details</a>
+                    <a href="{{ url_for('book_tour', tour_id=tour.id) }}" class="btn btn-sm btn-primary">Book Now</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="testimonials bg-light p-5 rounded-lg">
+    <h2 class="text-center mb-4">What Our Travelers Say</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card p-3">
+                <blockquote class="blockquote mb-0">
+                    <p>"Amazing experience! The tour guides were knowledgeable and friendly."</p>
+                    <footer class="blockquote-footer">Sarah Johnson</footer>
+                </blockquote>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3">
+                <blockquote class="blockquote mb-0">
+                    <p>"Best vacation ever! Everything was perfectly organized."</p>
+                    <footer class="blockquote-footer">Michael Brown</footer>
+                </blockquote>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3">
+                <blockquote class="blockquote mb-0">
+                    <p>"Will definitely travel with this company again. Highly recommended!"</p>
+                    <footer class="blockquote-footer">Emily Davis</footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

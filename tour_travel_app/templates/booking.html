@@ -1,0 +1,57 @@
+{% extends "base.html" %} {% block title %}Book {{ tour.title }} - Travel Explorer{% endblock %} {% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Book: {{ tour.title }}</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {{ form.hidden_tag() }}
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h5>Tour Details</h5>
+                                <ul class="list-unstyled">
+                                    <li><strong>Destination:</strong> {{ tour.destination }}</li>
+                                    <li><strong>Duration:</strong> {{ tour.duration }} days</li>
+                                    <li><strong>Price:</strong> ${{ tour.price }} per person</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <img src="{{ url_for('static', filename='images/' + tour.image) }}" class="img-fluid rounded" alt="{{ tour.title }}">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.travel_date.label(class="form-label") }} {{ form.travel_date(class="form-control") }} {% if form.travel_date.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.travel_date.errors %} {{ error }} {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.persons.label(class="form-label") }} {{ form.persons(class="form-control") }} {% if form.persons.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.persons.errors %} {{ error }} {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.special_requests.label(class="form-label") }} {{ form.special_requests(class="form-control", rows=4) }}
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">Confirm Booking</button>
+                            <a href="{{ url_for('tour_detail', tour_id=tour.id) }}" class="btn btn-outline-secondary">Back to Tour</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

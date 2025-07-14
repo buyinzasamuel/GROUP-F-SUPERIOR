@@ -1,0 +1,58 @@
+{% extends "base.html" %} {% block title %}Our Tours - Travel Explorer{% endblock %} {% block content %}
+<div class="container">
+    <h1 class="my-4">Our Tours</h1>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search tours..." aria-label="Search">
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <select class="form-select" aria-label="Filter by destination">
+                <option selected>Filter by destination</option>
+                <option value="1">Europe</option>
+                <option value="2">Asia</option>
+                <option value="3">Africa</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for tour in tours %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="{{ url_for('static', filename='images/' + tour.image) }}" class="card-img-top" alt="{{ tour.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ tour.title }}</h5>
+                    <p class="card-text">{{ tour.description[:100] }}...</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge bg-primary">{{ tour.duration }} days</span>
+                        <span class="text-muted">${{ tour.price }}</span>
+                    </div>
+                </div>
+                <div class="card-footer bg-white">
+                    <a href="{{ url_for('tour_detail', tour_id=tour.id) }}" class="btn btn-sm btn-outline-primary">View Details</a>
+                    <a href="{{ url_for('book_tour', tour_id=tour.id) }}" class="btn btn-sm btn-primary">Book Now</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+{% endblock %}
