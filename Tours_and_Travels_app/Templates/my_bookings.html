@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings | Wanderlust Tours</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+         :root {
+            --primary: #4e60ff;
+            --primary-light: #f3f4ff;
+            --secondary: #fd6d22;
+            --dark: #2b2b43;
+            --gray: #83859c;
+            --gray-light: #ededf2;
+            --white: #ffffff;
+            --success: #31c452;
+            --warning: #f9a52b;
+            --danger: #ff5c60;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--dark);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .page-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .bookings-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        
+        .booking-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .booking-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .booking-image {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .booking-details {
+            padding: 20px;
+        }
+        
+        .booking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .booking-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .booking-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-confirmed {
+            background-color: rgba(49, 196, 82, 0.1);
+            color: var(--success);
+        }
+        
+        .status-pending {
+            background-color: rgba(249, 165, 43, 0.1);
+            color: var(--warning);
+        }
+        
+        .status-cancelled {
+            background-color: rgba(255, 92, 96, 0.1);
+            color: var(--danger);
+        }
+        
+        .booking-info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-icon {
+            color: var(--primary);
+            font-size: 14px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .info-text {
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .booking-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid var(--gray-light);
+        }
+        
+        .booking-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .booking-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a4bff;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-light);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+            color: var(--white);
+        }
+        
+        .btn-danger:hover {
+            background-color: #ff4448;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            grid-column: 1 / -1;
+        }
+        
+        .empty-icon {
+            font-size: 60px;
+            color: var(--gray-light);
+            margin-bottom: 20px;
+        }
+        
+        .empty-text {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .filter-tab {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            background-color: var(--gray-light);
+            color: var(--gray);
+            transition: all 0.3s ease;
+        }
+        
+        .filter-tab.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        @media (max-width: 768px) {
+            .bookings-container {
+                grid-template-columns: 1fr;
+            }
+            .filter-tabs {
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Superiors<span><ADdress>Adventures</ADdress></span></div>
+            <div class="user-profile">
+                <span>Buyinza Samuel</span>
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Profile">
+            </div>
+        </header>
+
+        <h1 class="page-title">My Bookings</h1>
+
+        <div class="filter-tabs">
+            <div class="filter-tab active">All Bookings</div>
+            <div class="filter-tab">Upcoming</div>
+            <div class="filter-tab">Completed</div>
+            <div class="filter-tab">Cancelled</div>
+        </div>
+
+        <div class="bookings-container">
+            <!-- Booking Card 1 -->
+            <div class="booking-card">
+                <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Paris Tour" class="booking-image">
+                <div class="booking-details">
+                    <div class="booking-header">
+                        <h3 class="booking-title">Paris Romantic Getaway</h3>
+                        <span class="booking-status status-confirmed">Confirmed</span>
+                    </div>
+                    <div class="booking-info">
+                        <div class="info-row">
+                            <i class="fas fa-calendar-alt info-icon"></i>
+                            <span class="info-text">15 - 22 June 2023</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-users info-icon"></i>
+                            <span class="info-text">2 Adults</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-hotel info-icon"></i>
+                            <span class="info-text">Le Méridien Etoile</span>
+                        </div>
+                    </div>
+                    <div class="booking-footer">
+                        <div class="booking-price">$1,299</div>
+                        <div class="booking-actions">
+                            <button class="btn btn-outline">Details</button>
+                            <button class="btn btn-primary">Download</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Card 2 -->
+            <div class="booking-card">
+                <img src="https://images.unsplash.com/photo-1503917988258-f87a78e3c995?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Bali Tour" class="booking-image">
+                <div class="booking-details">
+                    <div class="booking-header">
+                        <h3 class="booking-title">Bali Adventure Package</h3>
+                        <span class="booking-status status-pending">Pending</span>
+                    </div>
+                    <div class="booking-info">
+                        <div class="info-row">
+                            <i class="fas fa-calendar-alt info-icon"></i>
+                            <span class="info-text">5 - 15 August 2023</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-users info-icon"></i>
+                            <span class="info-text">4 Adults</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-hotel info-icon"></i>
+                            <span class="info-text">The Kayon Resort</span>
+                        </div>
+                    </div>
+                    <div class="booking-footer">
+                        <div class="booking-price">$2,450</div>
+                        <div class="booking-actions">
+                            <button class="btn btn-outline">Details</button>
+                            <button class="btn btn-danger">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Card 3 -->
+            <div class="booking-card">
+                <img src="https://images.unsplash.com/photo-1538970272646-f61fabb3be8a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Tokyo Tour" class="booking-image">
+                <div class="booking-details">
+                    <div class="booking-header">
+                        <h3 class="booking-title">Tokyo Cultural Experience</h3>
+                        <span class="booking-status status-cancelled">Cancelled</span>
+                    </div>
+                    <div class="booking-info">
+                        <div class="info-row">
+                            <i class="fas fa-calendar-alt info-icon"></i>
+                            <span class="info-text">10 - 20 March 2023</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-users info-icon"></i>
+                            <span class="info-text">1 Adult</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-hotel info-icon"></i>
+                            <span class="info-text">Park Hotel Tokyo</span>
+                        </div>
+                    </div>
+                    <div class="booking-footer">
+                        <div class="booking-price">$1,799</div>
+                        <div class="booking-actions">
+                            <button class="btn btn-outline">Details</button>
+                            <button class="btn btn-primary">Book Again</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Card 4 -->
+            <div class="booking-card">
+                <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="New York Tour" class="booking-image">
+                <div class="booking-details">
+                    <div class="booking-header">
+                        <h3 class="booking-title">New York City Explorer</h3>
+                        <span class="booking-status status-confirmed">Confirmed</span>
+                    </div>
+                    <div class="booking-info">
+                        <div class="info-row">
+                            <i class="fas fa-calendar-alt info-icon"></i>
+                            <span class="info-text">1 - 8 December 2023</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-users info-icon"></i>
+                            <span class="info-text">2 Adults, 1 Child</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-hotel info-icon"></i>
+                            <span class="info-text">The Plaza Hotel</span>
+                        </div>
+                    </div>
+                    <div class="booking-footer">
+                        <div class="booking-price">$2,199</div>
+                        <div class="booking-actions">
+                            <button class="btn btn-outline">Details</button>
+                            <button class="btn btn-primary">Download</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State (uncomment to show when no bookings exist) -->
+            <!--
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="far fa-compass"></i>
+                </div>
+                <h3 class="empty-text">You don't have any bookings yet</h3>
+                <button class="btn btn-primary">Explore Tours</button>
+            </div>
+            -->
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Destinations | Superiors Tour and Travels</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+         :root {
+            --primary: #2a9d8f;
+            --secondary: #264653;
+            --accent: #e9c46a;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1521&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        nav {
+            background-color: var(--secondary);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .search-bar {
+            display: flex;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+        
+        .search-bar button {
+            background-color: var(--accent);
+            color: var(--dark);
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .search-bar button:hover {
+            background-color: #f4a261;
+        }
+        
+        .container {
+            padding: 5rem 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .category-btn {
+            padding: 0.8rem 1.5rem;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .category-btn:hover,
+        .category-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .destination-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        
+        .destination-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .destination-img {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .destination-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .destination-card:hover .destination-img img {
+            transform: scale(1.1);
+        }
+        
+        .destination-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--accent);
+            color: var(--dark);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .destination-info {
+            padding: 1.5rem;
+        }
+        
+        .destination-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+        
+        .destination-location {
+            display: flex;
+            align-items: center;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .destination-location i {
+            margin-right: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .destination-desc {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .destination-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .destination-rating {
+            display: flex;
+            align-items: center;
+        }
+        
+        .destination-rating i {
+            color: var(--accent);
+            margin-right: 0.3rem;
+        }
+        
+        .destination-price {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .destination-price span {
+            font-size: 1.2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: #21867a;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .featured-destinations {
+            margin: 5rem 0;
+        }
+        
+        .featured-slider {
+            position: relative;
+            margin-top: 3rem;
+        }
+        
+        .featured-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        
+        .featured-card.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .featured-img {
+            height: 400px;
+            overflow: hidden;
+        }
+        
+        .featured-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .featured-content {
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .featured-badge {
+            position: absolute;
+            top: -1.5rem;
+            left: 2rem;
+            background-color: var(--accent);
+            color: var(--dark);
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .featured-content h3 {
+            font-size: 1.8rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .featured-content p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .featured-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .featured-stat {
+            text-align: center;
+        }
+        
+        .featured-stat h4 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+        
+        .featured-stat p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .featured-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+            gap: 1rem;
+        }
+        
+        .featured-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ddd;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .featured-dot.active {
+            background-color: var(--primary);
+        }
+        
+        .testimonials {
+            background-color: var(--secondary);
+            color: white;
+            padding: 5rem 5%;
+            text-align: center;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .testimonial-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 8px;
+        }
+        
+        .testimonial-card i {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonial-author {
+            font-weight: bold;
+        }
+        
+        .newsletter {
+            background-color: var(--light);
+            padding: 5rem 5%;
+            text-align: center;
+        }
+        
+        .newsletter-form {
+            max-width: 600px;
+            margin: 2rem auto 0;
+            display: flex;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+        
+        .newsletter-form button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: #21867a;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 5%;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-col ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .search-bar,
+            .newsletter-form {
+                flex-direction: column;
+            }
+            .search-bar input,
+            .newsletter-form input {
+                border-radius: 4px;
+                margin-bottom: 0.5rem;
+            }
+            .search-bar button,
+            .newsletter-form button {
+                border-radius: 4px;
+                padding: 1rem;
+            }
+            .featured-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .featured-img {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="index.html" class="logo">Superiors<span>Adventures</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tours.html">Tours</a></li>
+            <li><a href="destinations.html" class="active">Destinations</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <h1>Discover Your Next Adventure</h1>
+        <p>Explore our curated collection of the world's most breathtaking destinations</p>
+        <div class="search-bar">
+            <input type="text" placeholder="Search destinations...">
+            <button><i class="fas fa-search"></i> Search</button>
+        </div>
+    </header>
+
+    <section class="container">
+        <div class="section-title">
+            <h2>Popular Destinations</h2>
+            <p>Journey to the world's most incredible places with our handpicked selection</p>
+        </div>
+
+        <div class="categories">
+            <button class="category-btn active">All Destinations</button>
+            <button class="category-btn">Beaches</button>
+            <button class="category-btn">Mountains</button>
+            <button class="category-btn">Cities</button>
+            <button class="category-btn">Wildlife</button>
+            <button class="category-btn">Cultural</button>
+            <button class="category-btn">Adventure</button>
+        </div>
+
+        <div class="destinations-grid">
+            <!-- Destination Card 1 -->
+            <div class="destination-card">
+                <div class="destination-img">
+                    <img src="https://images.unsplash.com/photo-1518391846015-55a9cc003b25?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Kyoto, Japan">
+                    <div class="destination-badge">Cultural</div>
+                </div>
+                <div class="destination-info">
+                    <h3>Kyoto, Japan</h3>
+                    <div class="destination-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Kansai Region, Japan</span>
+                    </div>
+                    <p class="destination-desc">Discover ancient temples, traditional tea houses, and stunning cherry blossoms in Japan's cultural heartland.</p>
+                    <div class="destination-meta">
+                        <div class="destination-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(128)</span>
+                        </div>
+                        <div class="destination-price">
+                            Tours from <span>$1,299</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn">Explore</a>
+                </div>
+            </div>
+
+            <!-- Destination Card 2 -->
+            <div class="destination-card">
+                <div class="destination-img">
+                    <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80" alt="Santorini, Greece">
+                    <div class="destination-badge">Romantic</div>
+                </div>
+                <div class="destination-info">
+                    <h3>Santorini, Greece</h3>
+                    <div class="destination-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Aegean Sea, Greece</span>
+                    </div>
+                    <p class="destination-desc">Whitewashed buildings, blue-domed churches, and breathtaking sunsets over the caldera.</p>
+                    <div class="destination-meta">
+                        <div class="destination-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(245)</span>
+                        </div>
+                        <div class="destination-price">
+                            Tours from <span>$1,799</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn">Explore</a>
+                </div>
+            </div>
+
+            <!-- Destination Card 3 -->
+            <div class="destination-card">
+                <div class="destination-img">
+                    <img src="https://images.unsplash.com/photo-1538970272646-f61fabb3be33?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1473&q=80" alt="Banff National Park">
+                    <div class="destination-badge">Adventure</div>
+                </div>
+                <div class="destination-info">
+                    <h3>Banff National Park</h3>
+                    <div class="destination-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Alberta, Canada</span>
+                    </div>
+                    <p class="destination-desc">Majestic Rocky Mountain peaks, turquoise lakes, and abundant wildlife in Canada's first national park.</p>
+                    <div class="destination-meta">
+                        <div class="destination-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(187)</span>
+                        </div>
+                        <div class="destination-price">
+                            Tours from <span>$1,499</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn">Explore</a>
+                </div>
+            </div>
+
+            <!-- Destination Card 4 -->
+            <div class="destination-card">
+                <div class="destination-img">
+                    <img src="https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1530&q=80" alt="Marrakech, Morocco">
+                    <div class="destination-badge">Cultural</div>
+                </div>
+                <div class="destination-info">
+                    <h3>Marrakech, Morocco</h3>
+                    <div class="destination-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Marrakesh-Safi, Morocco</span>
+                    </div>
+                    <p class="destination-desc">Vibrant souks, stunning palaces, and the magic of the Medina in Morocco's most famous city.</p>
+                    <div class="destination-meta">
+                        <div class="destination-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(93)</span>
+                        </div>
+                        <div class="destination-price">
+                            Tours from <span>$1,099</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn">Explore</a>
+                </div>
+            </div>
+
+            <!-- Destination Card 5 -->
+            <div class="destination-card">
+                <div class="destination-img">
+                    <img src="https://images.unsplash.com/photo-1503917988258-f87a78e3c995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1587&q=80" alt="Paris, France">
+                    <div class="destination-badge">Romantic</div>
+                </div>
+                <div class="destination-info">
+                    <h3>Paris, France</h3>
+                    <div class="destination-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Île-de-France, France</span>
+                    </div>
+                    <p class="destination-desc">The City of Light offers iconic landmarks, world-class museums, and unparalleled cuisine.</p>
+                    <div class="destination-meta">
+                        <div class="destination-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(312)</span>
+                        </div>
+                        <div class="destination-price">
+                            Tours from <span>$1,599</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn">Explore</a>
+                </div>
+            </div>
+
+            <!-- Destination Card 6 -->
+            <div class="destination-card">
+                <div class="destination-img">
+                    <img src="https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Maldives">
+                    <div class="destination-badge">Luxury</div>
+                </div>
+                <div class="destination-info">
+                    <h3>Maldives</h3>
+                    <div class="destination-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Indian Ocean</span>
+                    </div>
+                    <p class="destination-desc">Pristine white-sand beaches, crystal-clear waters, and luxurious overwater bungalows.</p>
+                    <div class="destination-meta">
+                        <div class="destination-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(176)</span>
+                        </div>
+                        <div class="destination-price">
+                            Tours from <span>$3,299</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn">Explore</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-destinations">
+        <div class="container">
+            <div class="section-title">
+                <h2>Featured Destination</h2>
+                <p>Each month we highlight one extraordinary destination worth exploring</p>
+            </div>
+
+            <div class="featured-slider">
+                <div class="featured-card active">
+                    <div class="featured-img">
+                        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Bali, Indonesia">
+                    </div>
+                    <div class="featured-content">
+                        <div class="featured-badge">Featured</div>
+                        <h3>Bali, Indonesia</h3>
+                        <p>Known as the Island of the Gods, Bali blends stunning natural beauty with vibrant culture. From lush jungles and volcanic mountains to pristine beaches and coral reefs, Bali offers diverse landscapes. The island's unique Hindu
+                            culture, expressed through daily offerings, temple ceremonies, and traditional dances, creates an enchanting atmosphere.</p>
+
+                        <div class="featured-stats">
+                            <div class="featured-stat">
+                                <h4>300+</h4>
+                                <p>Temples</p>
+                            </div>
+                            <div class="featured-stat">
+                                <h4>5</h4>
+                                <p>Volcanoes</p>
+                            </div>
+                            <div class="featured-stat">
+                                <h4>50+</h4>
+                                <p>Beaches</p>
+                            </div>
+                            <div class="featured-stat">
+                                <h4>12°S</h4>
+                                <p>Equatorial Climate</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem;">
+                            <a href="#" class="btn">View Tours</a>
+                            <a href="#" class="btn btn-outline">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="featured-nav">
+                    <div class="featured-dot active" data-index="0"></div>
+                    <div class="featured-dot" data-index="1"></div>
+                    <div class="featured-dot" data-index="2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Traveler Experiences</h2>
+                <p>Hear from adventurers who've explored these destinations with us</p>
+            </div>
+
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p class="testimonial-text">Kyoto exceeded all our expectations. The cultural immersion was incredible - from tea ceremonies to staying in a traditional ryokan. Wanderlust's local guides made all the difference.</p>
+                    <div class="testimonial-author">- Michael & Sarah Chen</div>
+                </div>
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p class="testimonial-text">Our week in Santorini was pure magic. The sunset cruise and private wine tasting were highlights, but even simple moments like breakfast with a caldera view were unforgettable.</p>
+                    <div class="testimonial-author">- Emily Rodriguez</div>
+                </div>
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p class="testimonial-text">Banff's natural beauty took our breath away. The hiking, wildlife spotting, and those turquoise lakes! Our guide knew all the secret spots away from the crowds.</p>
+                    <div class="testimonial-author">- David Wilson</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <div class="container">
+            <div class="section-title">
+                <h2>Get Travel Inspiration</h2>
+                <p>Subscribe to our newsletter for destination highlights and exclusive offers</p>
+            </div>
+
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email address">
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Wanderlust</h3>
+                    <p>Creating unforgettable travel experiences since 2010. Our mission is to connect people with the world's most amazing places.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="tours.html">Tours</a></li>
+                        <li><a href="destinations.html">Destinations</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Booking Terms</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Customer Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Travel St, Adventure City</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@superiors.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Superior Tour and Travels. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Destination category filter functionality
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelector('.category-btn.active').classList.remove('active');
+                this.classList.add('active');
+                // Here you would add actual filtering logic
+            });
+        });
+
+        // Featured destination slider
+        const featuredCards = document.querySelectorAll('.featured-card');
+        const featuredDots = document.querySelectorAll('.featured-dot');
+        let currentFeatured = 0;
+
+        function showFeatured(index) {
+            featuredCards.forEach(card => card.classList.remove('active'));
+            featuredDots.forEach(dot => dot.classList.remove('active'));
+
+            featuredCards[index].classList.add('active');
+            featuredDots[index].classList.add('active');
+            currentFeatured = index;
+        }
+
+        featuredDots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                const index = parseInt(this.getAttribute('data-index'));
+                showFeatured(index);
+            });
+        });
+
+        // Auto-rotate featured destinations
+        setInterval(() => {
+            currentFeatured = (currentFeatured + 1) % featuredCards.length;
+            showFeatured(currentFeatured);
+        }, 8000);
+    </script>
+</body>
+
+</html>

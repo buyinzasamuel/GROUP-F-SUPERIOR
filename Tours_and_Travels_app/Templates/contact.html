@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Superiors Tours and Travels</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+         :root {
+            --primary: #2a9d8f;
+            --secondary: #264653;
+            --accent: #e9c46a;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1368&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        nav {
+            background-color: var(--secondary);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .search-bar {
+            display: flex;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+        
+        .search-bar button {
+            background-color: var(--accent);
+            color: var(--dark);
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .search-bar button:hover {
+            background-color: #f4a261;
+        }
+        
+        .container {
+            padding: 5rem 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .tours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .tour-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .tour-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tour-img {
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .tour-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .tour-card:hover .tour-img img {
+            transform: scale(1.1);
+        }
+        
+        .tour-info {
+            padding: 1.5rem;
+        }
+        
+        .tour-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+        
+        .tour-location {
+            display: flex;
+            align-items: center;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .tour-location i {
+            margin-right: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .tour-desc {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .tour-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tour-duration,
+        .tour-price {
+            display: flex;
+            align-items: center;
+        }
+        
+        .tour-duration i,
+        .tour-price i {
+            margin-right: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .tour-price {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .tour-price span {
+            font-size: 1.2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: #21867a;
+        }
+        
+        .categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .category-btn {
+            padding: 0.8rem 1.5rem;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .category-btn:hover,
+        .category-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .testimonials {
+            background-color: var(--secondary);
+            color: white;
+            padding: 5rem 5%;
+            text-align: center;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .testimonial-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 8px;
+        }
+        
+        .testimonial-card i {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonial-author {
+            font-weight: bold;
+        }
+        
+        .newsletter {
+            background-color: var(--light);
+            padding: 5rem 5%;
+            text-align: center;
+        }
+        
+        .newsletter-form {
+            max-width: 600px;
+            margin: 2rem auto 0;
+            display: flex;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+        
+        .newsletter-form button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: #21867a;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 5%;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-col ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .search-bar,
+            .newsletter-form {
+                flex-direction: column;
+            }
+            .search-bar input,
+            .newsletter-form input {
+                border-radius: 4px;
+                margin-bottom: 0.5rem;
+            }
+            .search-bar button,
+            .newsletter-form button {
+                border-radius: 4px;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="index.html" class="logo">Superiors<span>Adventures</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tours.html" class="active">Tours</a></li>
+            <li><a href="destinations.html">Destinations</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <h1>Discover Amazing Tours</h1>
+        <p>Explore our handpicked collection of unforgettable travel experiences around the globe</p>
+        <div class="search-bar">
+            <input type="text" placeholder="Search for tours, destinations...">
+            <button><i class="fas fa-search"></i> Search</button>
+        </div>
+    </header>
+
+    <section class="container">
+        <div class="section-title">
+            <h2>Our Popular Tours</h2>
+            <p>Journey to the world's most breathtaking destinations with our expertly crafted tours</p>
+        </div>
+
+        <div class="categories">
+            <button class="category-btn active">All Tours</button>
+            <button class="category-btn">Adventure</button>
+            <button class="category-btn">Beach</button>
+            <button class="category-btn">Cultural</button>
+            <button class="category-btn">Wildlife</button>
+            <button class="category-btn">Honeymoon</button>
+            <button class="category-btn">Family</button>
+        </div>
+
+        <div class="tours-grid">
+            <!-- Tour Card 1 -->
+            <div class="tour-card">
+                <div class="tour-img">
+                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Bali Adventure">
+                </div>
+                <div class="tour-info">
+                    <h3>Bali Cultural Experience</h3>
+                    <div class="tour-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Bali, Indonesia</span>
+                    </div>
+                    <p class="tour-desc">Immerse yourself in Bali's rich culture with temple visits, traditional dance performances, and authentic cooking classes.</p>
+                    <div class="tour-meta">
+                        <div class="tour-duration">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>7 Days</span>
+                        </div>
+                        <div class="tour-price">
+                            <i class="fas fa-tag"></i>
+                            <span>$1,299</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn">Book Now</a>
+                </div>
+            </div>
+
+            <!-- Tour Card 2 -->
+            <div class="tour-card">
+                <div class="tour-img">
+                    <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80" alt="Safari Adventure">
+                </div>
+                <div class="tour-info">
+                    <h3>African Safari Adventure</h3>
+                    <div class="tour-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Serengeti, Tanzania</span>
+                    </div>
+                    <p class="tour-desc">Witness the Great Migration and spot the Big Five on this unforgettable safari experience in the heart of Africa.</p>
+                    <div class="tour-meta">
+                        <div class="tour-duration">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>10 Days</span>
+                        </div>
+                        <div class="tour-price">
+                            <i class="fas fa-tag"></i>
+                            <span>$3,499</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn">Book Now</a>
+                </div>
+            </div>
+
+            <!-- Tour Card 3 -->
+            <div class="tour-card">
+                <div class="tour-img">
+                    <img src="https://images.unsplash.com/photo-1503917988258-f87a78e3c995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1587&q=80" alt="European Explorer">
+                </div>
+                <div class="tour-info">
+                    <h3>European Explorer</h3>
+                    <div class="tour-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Multiple Countries</span>
+                    </div>
+                    <p class="tour-desc">Discover the best of Europe with this multi-country tour covering Paris, Rome, Amsterdam, and Barcelona.</p>
+                    <div class="tour-meta">
+                        <div class="tour-duration">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>14 Days</span>
+                        </div>
+                        <div class="tour-price">
+                            <i class="fas fa-tag"></i>
+                            <span>$2,799</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn">Book Now</a>
+                </div>
+            </div>
+
+            <!-- Tour Card 4 -->
+            <div class="tour-card">
+                <div class="tour-img">
+                    <img src="https://images.unsplash.com/photo-1518391846015-55a9cc003b25?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Japanese Culture">
+                </div>
+                <div class="tour-info">
+                    <h3>Japanese Cultural Journey</h3>
+                    <div class="tour-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Kyoto, Japan</span>
+                    </div>
+                    <p class="tour-desc">Experience traditional Japan with tea ceremonies, samurai history, and stays in authentic ryokan inns.</p>
+                    <div class="tour-meta">
+                        <div class="tour-duration">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>9 Days</span>
+                        </div>
+                        <div class="tour-price">
+                            <i class="fas fa-tag"></i>
+                            <span>$2,199</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn">Book Now</a>
+                </div>
+            </div>
+
+            <!-- Tour Card 5 -->
+            <div class="tour-card">
+                <div class="tour-img">
+                    <img src="https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Maldives Resort">
+                </div>
+                <div class="tour-info">
+                    <h3>Maldives Paradise Retreat</h3>
+                    <div class="tour-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Maldives</span>
+                    </div>
+                    <p class="tour-desc">Relax in luxury overwater bungalows with private pools, coral reef snorkeling, and sunset cruises.</p>
+                    <div class="tour-meta">
+                        <div class="tour-duration">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>6 Days</span>
+                        </div>
+                        <div class="tour-price">
+                            <i class="fas fa-tag"></i>
+                            <span>$3,899</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn">Book Now</a>
+                </div>
+            </div>
+
+            <!-- Tour Card 6 -->
+            <div class="tour-card">
+                <div class="tour-img">
+                    <img src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Rocky Mountains">
+                </div>
+                <div class="tour-info">
+                    <h3>Rocky Mountain Adventure</h3>
+                    <div class="tour-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Colorado, USA</span>
+                    </div>
+                    <p class="tour-desc">Hike through breathtaking landscapes, whitewater rafting, and wildlife spotting in America's stunning Rockies.</p>
+                    <div class="tour-meta">
+                        <div class="tour-duration">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>5 Days</span>
+                        </div>
+                        <div class="tour-price">
+                            <i class="fas fa-tag"></i>
+                            <span>$1,599</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn">Book Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="section-title">
+            <h2>What Our Travelers Say</h2>
+            <p>Hear from our satisfied customers about their unforgettable experiences</p>
+        </div>
+
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <i class="fas fa-quote-left"></i>
+                <p class="testimonial-text">The Bali cultural tour exceeded all expectations. The guides were knowledgeable and the itinerary was perfectly balanced between activities and free time.</p>
+                <div class="testimonial-author">- Sarah Johnson</div>
+            </div>
+            <div class="testimonial-card">
+                <i class="fas fa-quote-left"></i>
+                <p class="testimonial-text">Our African safari was the trip of a lifetime! We saw all the Big Five and the accommodations were luxurious yet authentic. Highly recommend!</p>
+                <div class="testimonial-author">- Michael Chen</div>
+            </div>
+            <div class="testimonial-card">
+                <i class="fas fa-quote-left"></i>
+                <p class="testimonial-text">Superiors Tours and Travels made our European honeymoon seamless. Every detail was taken care of, allowing us to simply enjoy each magical moment together.</p>
+                <div class="testimonial-author">- Emily & David Rodriguez</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <div class="section-title">
+            <h2>Stay Updated</h2>
+            <p>Subscribe to our newsletter for exclusive deals and travel inspiration</p>
+        </div>
+
+        <form class="newsletter-form">
+            <input type="email" placeholder="Enter your email address">
+            <button type="submit">Subscribe</button>
+        </form>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>Superiors Tours and Travels</h3>
+                <p>Creating unforgettable travel experiences since 2010. Our mission is to connect people with the world's most amazing places.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="tours.html">Tours</a></li>
+                    <li><a href="destinations.html">Destinations</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Booking Terms</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Customer Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Travel St, Adventure City</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-envelope"></i> info@superiorstours.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Superiors Tour and Travels. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple category filter functionality
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelector('.category-btn.active').classList.remove('active');
+                this.classList.add('active');
+                // Here you would add actual filtering logic
+            });
+        });
+    </script>
+</body>
+
+</html>
