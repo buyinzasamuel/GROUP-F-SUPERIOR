@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Get in Touch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .contact-card {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        textarea {
+            resize: none;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+        
+        .submit-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .success-message {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-gray-50">
+    <div class="container mx-auto px-4 py-12 max-w-6xl">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Get in Touch</h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Have questions or need assistance? Fill out the form below and our team will get back to you shortly.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Contact Form Section -->
+            <div class="bg-white rounded-xl p-8 contact-card">
+                <form id="contactForm" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                        <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-300 input-field focus:border-indigo-500" placeholder="Jane Smith">
+                        <div id="nameError" class="error-message"></div>
+                    </div>
+
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                        <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-300 input-field focus:border-indigo-500" placeholder="your@email.com">
+                        <div id="emailError" class="error-message"></div>
+                    </div>
+
+                    <div>
+                        <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                        <select id="subject" name="subject" class="w-full px-4 py-3 rounded-lg border border-gray-300 input-field focus:border-indigo-500">
+                            <option value="">Select a subject</option>
+                            <option value="General Inquiry">General Inquiry</option>
+                            <option value="Technical Support">Technical Support</option>
+                            <option value="Feedback">Feedback</option>
+                            <option value="Partnership">Partnership</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Your Message</label>
+                        <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 rounded-lg border border-gray-300 input-field focus:border-indigo-500" placeholder="How can we help you?"></textarea>
+                        <div id="messageError" class="error-message"></div>
+                    </div>
+
+                    <div class="relative">
+                        <button type="submit" class="w-full py-3 px-6 bg-indigo-600 text-white font-semibold rounded-lg submit-btn focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            Send Message
+                        </button>
+                        <div id="successMessage" class="success-message text-center mt-4 text-green-600 font-medium">
+                            Thank you! Your message has been sent successfully.
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Contact Information Section -->
+            <div class="bg-white rounded-xl p-8 contact-card">
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Contact Information</h3>
+                        <p class="text-gray-600">
+                            You can also reach us through these alternative channels. We're here to help you!
+                        </p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 bg-indigo-100 p-3 rounded-lg">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/526eb80e-5cfe-4897-8323-a3938b93fc59.png" alt="Envelope icon representing email communication" class="h-6 w-6" />
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-gray-900">Email</h4>
+                                <p class="text-gray-600">support@company.com</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 bg-indigo-100 p-3 rounded-lg">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2c76e5d6-4e0b-4101-8c14-334a85617b2e.png" alt="Telephone icon representing phone support" class="h-6 w-6" />
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-gray-900">Phone</h4>
+                                <p class="text-gray-600">+1 (555) 123-4567</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 bg-indigo-100 p-3 rounded-lg">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/808e291d-2171-4a71-a539-d1cc23d606e4.png" alt="Map pin icon representing office location" class="h-6 w-6" />
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-gray-900">Office</h4>
+                                <p class="text-gray-600">123 Tech Street<br>San Francisco, CA 94107</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 mt-6 border-t border-gray-200">
+                        <h4 class="text-sm font-semibold text-gray-900 mb-3">Connect With Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-500 hover:text-indigo-600">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/97e33c4f-2bf2-4116-8cf2-298dad84d504.png" alt="Twitter social media icon" class="h-6 w-6" />
+                            </a>
+                            <a href="#" class="text-gray-500 hover:text-indigo-600">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1aca7871-0f36-4f2b-a6b7-0e512629a6d3.png" alt="LinkedIn professional networking icon" class="h-6 w-6" />
+                            </a>
+                            <a href="#" class="text-gray-500 hover:text-indigo-600">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9e62da5d-8894-4ad2-b4f9-bd32dc60a68b.png" alt="Facebook social media icon" class="h-6 w-6" />
+                            </a>
+                            <a href="#" class="text-gray-500 hover:text-indigo-600">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d414da40-efb1-4f6d-976b-3f3a3d7e2ba9.png" alt="Instagram social media icon" class="h-6 w-6" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Section -->
+        <div class="mt-12 bg-white rounded-xl overflow-hidden contact-card">
+            <div class="aspect-w-16 aspect-h-9">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0b915388-0419-438d-99a4-a48e115a17af.png" alt="Map view of our office location showing downtown San Francisco with a pin marker at 123 Tech Street" class="object-cover w-full h-full"
+                />
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Reset error messages
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('messageError').textContent = '';
+
+            // Get form values
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            let isValid = true;
+
+            // Validate name
+            if (name === '') {
+                document.getElementById('nameError').textContent = 'Please enter your name';
+                isValid = false;
+            }
+
+            // Validate email
+            if (email === '') {
+                document.getElementById('emailError').textContent = 'Please enter your email';
+                isValid = false;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email address';
+                isValid = false;
+            }
+
+            // Validate message
+            if (message === '') {
+                document.getElementById('messageError').textContent = 'Please enter your message';
+                isValid = false;
+            } else if (message.length < 10) {
+                document.getElementById('messageError').textContent = 'Message should be at least 10 characters';
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Form is valid - simulate submission
+                const submitBtn = event.target.querySelector('button[type="submit"]');
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
+
+                // Simulate API call with setTimeout
+                setTimeout(() => {
+                    // Reset form
+                    event.target.reset();
+
+                    // Show success message
+                    const successMessage = document.getElementById('successMessage');
+                    successMessage.style.opacity = '1';
+
+                    // Reset button
+                    submitBtn.textContent = 'Send Message';
+                    submitBtn.disabled = false;
+
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        successMessage.style.opacity = '0';
+                    }, 5000);
+                }, 1500);
+            }
+        });
+    </script>
+</body>
+
+</html>
