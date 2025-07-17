@@ -9,10 +9,18 @@ class Config:
     #Database URI for SQLAlchemy
     #You can set it as an environment variable for security
     #If DATABASE_URL is not set, it defaults to a SQLite database
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///site.db'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:DENNISE@localhost:5432/flask_db'
     #Disable track modifications to save memory
     #This is not needed in most cases and can be set to False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    
+    DATABASE = {
+           'database': 'flask_db',
+           'user': 'postgres',
+           'password': 'yourpassword',
+           'host': 'localhost',
+           'port': '5432'
+    }
     
     #Folder for file uploads
     #This is where uploaded files will be stored
