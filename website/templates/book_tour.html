@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head><title>Book Tour</title></head>
+<body>
+    <h1>Book: {{ tour.title }}</h1>
+
+    <form method="POST">
+        Name: <input type="text" name="name" required><br>
+        Email: <input type="email" name="email" required><br>
+        Date: <input type="date" name="date" required><br>
+        <button type="submit">Book Now</button>
+    </form>
+
+    <a href="{{ url_for('main.tour_list') }}">Back to Tours</a>
+</body>
+</html>

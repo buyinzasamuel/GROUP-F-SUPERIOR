@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head><title>Available Tours</title></head>
+<body>
+    <h1>Available Tours</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <p style="color: green;">{{ message }}</p>
+      {% endfor %}
+    {% endwith %}
+
+    <ul>
+        {% for tour in tours %}
+            <li>
+                {{ tour.title }} - ${{ tour.price }}
+                <p><strong>Location:</strong> {{ tour.location }}</p>
+            <p><strong>Duration:</strong> {{ tour.duration }}</p>
+            <p>{{ tour.description }}</p>
+            {% if tour.image_url %}
+                <img src="{{ tour.image_url }}" alt="{{ tour.title }}" width="200">
+            {% endif %}<br>
+                <a href="{{ url_for('main.book_tour', tour_id=tour.id) }}">Book Now</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

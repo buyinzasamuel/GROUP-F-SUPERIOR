@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reports</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6">Booking Reports</h1>
+
+        <!-- Summary Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white p-6 rounded shadow">
+                <h2 class="text-lg font-semibold">Total Bookings</h2>
+                <p class="text-2xl mt-2">{{ total_bookings }}</p>
+            </div>
+            <div class="bg-white p-6 rounded shadow">
+                <h2 class="text-lg font-semibold">Total Revenue</h2>
+                <p class="text-2xl mt-2">${{ total_revenue }}</p>
+            </div>
+        </div>
+
+        <!-- Popular Destinations -->
+        <div class="bg-white p-6 rounded shadow mb-8">
+            <h2 class="text-lg font-semibold mb-4">Most Popular Destinations</h2>
+            <canvas id="popularChart"></canvas>
+        </div>
+
+        <!-- Monthly Revenue -->
+        <div class="bg-white p-6 rounded shadow mb-8">
+            <h2 class="text-lg font-semibold mb-4">Monthly Revenue</h2>
+            <canvas id="revenueChart"></canvas>
+        </div>
+
+        <!-- Export Buttons -->
+        <div class="flex gap-4">
+            <a href="{{ url_for('custom_admin.export_pdf') }}" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                Export PDF
+            </a>
+            <a href="{{ url_for('custom_admin.export_csv') }}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                Export CSV
+            </a>
+        </div>
+    </div>
+
+    <!-- Charts Script -->
+    <script>
+        const popularCtx = document.getElementById('popularChart').getContext('2d');
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+
+        new Chart(popularCtx, {
+            type: 'bar',
+            data: {
+                labels: {{ popular_labels|tojson }},
+                datasets: [{
+                    label: 'Bookings',
+                    data: {{ popular_counts|tojson }},
+                    backgroundColor: '#3b82f6',
+                }]
+            }
+        });
+
+        new Chart(revenueCtx, {
+            type: 'line',
+            data: {
+                labels: {{ monthly_labels|tojson }},
+                datasets: [{
+                    label: 'Revenue',
+                    data: {{ monthly_revenue|tojson }},
+                    borderColor: '#10b981',
+                    fill: false
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
