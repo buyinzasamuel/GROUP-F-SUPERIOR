@@ -86,9 +86,12 @@
             <h1 class="text-4xl md:text-6xl font-bold mb-6">Discover Your Next Adventure</h1>
             <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">Explore breathtaking destinations with our expertly crafted tours and travel experiences.</p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="{{ url_for('main.tours') }}">
+                <a href="{{ url_for('main.tour_list') }}">
                 <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-medium transition">Explore Tours</button></a>
-                <a href="{{ url_for('main.book_tour') }}">
+                {% for tour in tours %}
+                <a href="{{ url_for('main.book_tour', tour_id=tour.id) }}">Book Now</a>
+                {% endfor %}
+
                 <button class="bg-white hover:bg-gray-100 text-blue-600 px-6 py-3 rounded-md font-medium transition">Book a tour</button></a>
             </div>
         </div>

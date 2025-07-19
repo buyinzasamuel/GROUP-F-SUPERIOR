@@ -4,7 +4,7 @@ from sqlalchemy import func, extract
 from io import BytesIO, StringIO
 import csv
 from xhtml2pdf import pisa
-
+from werkzeug.security import generate_password_hash
 from .. import db
 from ..models import Destination, User, Tour, Booking, Inquiry
 
@@ -58,7 +58,7 @@ def logout():
 @admin_required
 def dashboard():
     users = User.query.all()
-    tours = Tour.query.all()
+    tours = Tour.query.order_by(Tour.id.desc()).all()  # latest first
     bookings = Booking.query.all()
     inquiries = Inquiry.query.all()
 
@@ -94,9 +94,13 @@ def dashboard():
 @login_required
 @admin_required
 def add_user():
+    password = request.form['password']  # Get password first
     user = User(
-        username=request.form['username'],
-        email=request.form['email']
+        first_name=request.form['first_name'],
+        last_name=request.form['last_name'],
+        email=request.form['email'],
+        password_hash=generate_password_hash(password),
+        is_admin=False,
     )
     db.session.add(user)
     db.session.commit()
@@ -120,7 +124,8 @@ def delete_user(id):
 @admin_required
 def edit_user(id):
     user = User.query.get_or_404(id)
-    user.username = request.form['username']
+    user.first_name = request.form['first_name']
+    user.last_name = request.form['last_name']
     user.email = request.form['email']
     db.session.commit()
     flash('User updated successfully.', 'success')
@@ -133,16 +138,32 @@ def edit_user(id):
 @login_required
 @admin_required
 def add_tour():
+    # Get destination ID from form and validate it
+    destination_id = request.form.get('destination_id')
+    destination_id = int(destination_id) if destination_id else None
+
+    # Create new tour instance
     tour = Tour(
         title=request.form['title'],
         description=request.form['description'],
-        price=float(request.form['price'])
+        price=float(request.form['price']),
+        destination_id=destination_id,  # use the already validated variable
+        image_url=request.form.get('image_url', '')
     )
+
+    # Commit to database
     db.session.add(tour)
     db.session.commit()
     flash('Tour added successfully.', 'success')
     return redirect(url_for('custom_admin.dashboard'))
 
+
+@admin.route('/tours/new', methods=['GET'])
+@login_required
+@admin_required
+def new_tour_form():
+    destinations = Destination.query.all()
+    return render_template('admin/new_tour.html', destinations=destinations)
 
 @admin.route('/tours/delete/<int:id>', endpoint='delete_tour')
 @login_required
@@ -158,14 +179,19 @@ def delete_tour(id):
 @admin.route('/tours/edit/<int:id>', methods=['POST'], endpoint='edit_tour')
 @login_required
 @admin_required
-def edit_tour(id):
-    tour = Tour.query.get_or_404(id)
-    tour.title = request.form['title']
-    tour.description = request.form['description']
-    tour.price = float(request.form['price'])
-    db.session.commit()
-    flash('Tour updated successfully.', 'success')
-    return redirect(url_for('custom_admin.dashboard'))
+def edit_tour(tour_id):
+    tour = Tour.query.get_or_404(tour_id)
+    if request.method == 'POST':
+        tour.title = request.form['title']
+        tour.description = request.form['description']
+        tour.price = float(request.form['price'])
+        tour.destination_id = int(request.form['destination_id'])
+        tour.image_url = request.form.get('image_url', tour.image_url)
+        db.session.commit()
+        flash('Tour updated successfully.', 'success')
+        return redirect(url_for('custom_admin.dashboard'))
+    destinations = Destination.query.all()
+    return render_template('admin/edit_tour.html', tour=tour, destinations=destinations)
 
 # ---------- INQUIRIES (if needed) ----------
 

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit Tour - TravelPro</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #e0f2fe; /* light sky blue */
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #023e8a;
+    }
+
+    .edit-container {
+      background: white;
+      padding: 2rem 3rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      width: 400px;
+      max-width: 95%;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      color: #0077b6;
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+      color: #023e8a;
+      margin-top: 1rem;
+    }
+
+    form input[type="text"],
+    form input[type="number"],
+    form textarea,
+    form select {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 2px solid #90caf9;
+      border-radius: 6px;
+      font-size: 1rem;
+      resize: vertical;
+      transition: border-color 0.3s ease;
+    }
+
+    form input[type="text"]:focus,
+    form input[type="number"]:focus,
+    form textarea:focus,
+    form select:focus {
+      outline: none;
+      border-color: #0077b6;
+      box-shadow: 0 0 8px rgba(0, 119, 182, 0.4);
+    }
+
+    textarea {
+      min-height: 80px;
+    }
+
+    button {
+      margin-top: 2rem;
+      width: 100%;
+      background-color: #0077b6;
+      color: white;
+      border: none;
+      padding: 0.75rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #023e8a;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .edit-container {
+        padding: 1.5rem 1.5rem;
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="edit-container">
+    <h2>Edit Tour</h2>
+    <form method="POST" action="{{ url_for('custom_admin.edit_tour', tour_id=tour.id) }}">
+      <label for="title">Title:</label>
+      <input type="text" name="title" value="{{ tour.title }}" required />
+
+      <label for="description">Description:</label>
+      <textarea name="description" required>{{ tour.description }}</textarea>
+
+      <label for="price">Price:</label>
+      <input type="number" name="price" value="{{ tour.price }}" required step="0.01" />
+
+      <label for="destination_id">Destination:</label>
+      <select name="destination_id" required>
+        {% for destination in destinations %}
+          <option value="{{ destination.id }}" {% if destination.id == tour.destination_id %}selected{% endif %}>{{ destination.name }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="image_url">Image URL:</label>
+      <input type="text" name="image_url" value="{{ tour.image_url or '' }}" />
+
+      <button type="submit">Update Tour</button>
+    </form>
+  </div>
+</body>
+</html>
