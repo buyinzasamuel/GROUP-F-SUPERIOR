@@ -480,6 +480,15 @@
             color: var(--primary);
             font-size: 10px;
         }
+        /* Section Content */
+        
+        .section-content {
+            display: none;
+        }
+        
+        .section-content.active {
+            display: block;
+        }
         /* Responsive Styles */
         
         @media (max-width: 992px) {
@@ -532,33 +541,25 @@
         </div>
 
         <div class="sidebar-menu">
-            <div class="menu-item active">
+            <div class="menu-item active" data-section="dashboard">
                 <i class="fas fa-home"></i>
                 <span>Dashboard</span>
             </div>
-            <div class="menu-item">
+            <div class="menu-item" data-section="bookings">
                 <i class="fas fa-suitcase-rolling"></i>
                 <span>Bookings</span>
             </div>
-            <div class="menu-item">
+            <div class="menu-item" data-section="destinations">
                 <i class="fas fa-map-marked-alt"></i>
                 <span>Destinations</span>
             </div>
-            <div class="menu-item">
+            <div class="menu-item" data-section="customers">
                 <i class="fas fa-users"></i>
                 <span>Customers</span>
             </div>
-            <div class="menu-item">
+            <div class="menu-item" data-section="reports">
                 <i class="fas fa-chart-line"></i>
                 <span>Reports</span>
-            </div>
-            <div class="menu-item">
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
-            </div>
-            <div class="menu-item">
-                <i class="fas fa-question-circle"></i>
-                <span>Support</span>
             </div>
         </div>
     </div>
@@ -584,218 +585,614 @@
 
         <!-- Dashboard Content -->
         <div class="dashboard-content">
-            <!-- Welcome Banner -->
-            <div class="welcome-banner">
-                <h1>Welcome Back, Dennise!</h1>
-                <p>Here's what's happening with your travel business today. You have 12 new bookings and 5 pending approvals.</p>
-                <a href="#" class="btn">Create New Tour</a>
+            <!-- Dashboard Section -->
+            <div id="dashboard" class="section-content active">
+                <!-- Welcome Banner -->
+                <div class="welcome-banner">
+                    <h1>You are Welcome to the Superiors Tours and Travels Dashboard !</h1>
+                    <p>Here's what's happening with your travel business today. You have 12 new bookings and 5 pending approvals.</p>
+                    <a href="#" class="btn">Create New Tour</a>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-value">1,248</div>
+                                <div class="stat-title">Total Bookings</div>
+                            </div>
+                            <div class="stat-icon bookings">
+                                <i class="fas fa-suitcase-rolling"></i>
+                            </div>
+                        </div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> 12.5% from last month
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-value">$84,760</div>
+                                <div class="stat-title">Total Revenue</div>
+                            </div>
+                            <div class="stat-icon revenue">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                        </div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> 8.3% from last month
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-value">568</div>
+                                <div class="stat-title">Active Customers</div>
+                            </div>
+                            <div class="stat-icon customers">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> 5.2% from last month
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-value">42</div>
+                                <div class="stat-title">Destinations</div>
+                            </div>
+                            <div class="stat-icon destinations">
+                                <i class="fas fa-map-marked-alt"></i>
+                            </div>
+                        </div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> 2 new this month
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Bookings -->
+                <h2 class="section-title">
+                    <i class="fas fa-clock"></i> Recent Bookings
+                </h2>
+
+                <div class="recent-bookings">
+                    <table class="booking-table">
+                        <thead>
+                            <tr>
+                                <th>Destination</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="booking-destination">
+                                        <img src="https://images.unsplash.com/photo-1503917988258-f87a78e3c995?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Paris">
+                                        <span>Paris, France</span>
+                                    </div>
+                                </td>
+                                <td>Michael Brown</td>
+                                <td>Jun 15-22, 2023</td>
+                                <td>$2,450</td>
+                                <td><span class="booking-status status-confirmed">Confirmed</span></td>
+                                <td><button class="action-btn view-btn">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="booking-destination">
+                                        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Bali">
+                                        <span>Bali, Indonesia</span>
+                                    </div>
+                                </td>
+                                <td>Emily Davis</td>
+                                <td>Aug 5-15, 2023</td>
+                                <td>$3,200</td>
+                                <td><span class="booking-status status-pending">Pending</span></td>
+                                <td><button class="action-btn view-btn">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="booking-destination">
+                                        <img src="https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Tokyo">
+                                        <span>Tokyo, Japan</span>
+                                    </div>
+                                </td>
+                                <td>Robert Wilson</td>
+                                <td>Apr 1-10, 2024</td>
+                                <td>$4,500</td>
+                                <td><span class="booking-status status-confirmed">Confirmed</span></td>
+                                <td><button class="action-btn view-btn">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="booking-destination">
+                                        <img src="https://images.unsplash.com/photo-1518391846015-55a9cc003b25?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Safari">
+                                        <span>Serengeti Safari</span>
+                                    </div>
+                                </td>
+                                <td>Jessica Lee</td>
+                                <td>Mar 10-20, 2023</td>
+                                <td>$5,800</td>
+                                <td><span class="booking-status status-cancelled">Cancelled</span></td>
+                                <td><button class="action-btn view-btn">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Popular Destinations -->
+                <h2 class="section-title" style="margin-top: 30px;">
+                    <i class="fas fa-fire"></i> Popular Destinations
+                </h2>
+
+                <div class="destinations-grid">
+                    <div class="destination-card">
+                        <div class="destination-image">
+                            <img src="https://images.unsplash.com/photo-1503917988258-f87a78e3c995?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Paris">
+                        </div>
+                        <div class="destination-info">
+                            <div class="destination-name">Paris, France</div>
+                            <div class="destination-bookings">
+                                <i class="fas fa-suitcase"></i>
+                                <span>128 bookings</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-image">
+                            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Bali">
+                        </div>
+                        <div class="destination-info">
+                            <div class="destination-name">Bali, Indonesia</div>
+                            <div class="destination-bookings">
+                                <i class="fas fa-suitcase"></i>
+                                <span>98 bookings</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-image">
+                            <img src="https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Tokyo">
+                        </div>
+                        <div class="destination-info">
+                            <div class="destination-name">Tokyo, Japan</div>
+                            <div class="destination-bookings">
+                                <i class="fas fa-suitcase"></i>
+                                <span>87 bookings</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-image">
+                            <img src="https://images.unsplash.com/photo-1518391846015-55a9cc003b25?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Safari">
+                        </div>
+                        <div class="destination-info">
+                            <div class="destination-name">Serengeti Safari</div>
+                            <div class="destination-bookings">
+                                <i class="fas fa-suitcase"></i>
+                                <span>65 bookings</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Stats Cards -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <div>
-                            <div class="stat-value">1,248</div>
-                            <div class="stat-title">Total Bookings</div>
-                        </div>
-                        <div class="stat-icon bookings">
-                            <i class="fas fa-suitcase-rolling"></i>
-                        </div>
-                    </div>
-                    <div class="stat-change positive">
-                        <i class="fas fa-arrow-up"></i> 12.5% from last month
-                    </div>
+            <!-- Bookings Section -->
+            <div id="bookings" class="section-content">
+                <h2 class="section-title">
+                    <i class="fas fa-suitcase-rolling"></i> All Bookings
+                </h2>
+                <div class="recent-bookings">
+                    <table class="booking-table">
+                        <thead>
+                            <tr>
+                                <th>Destination</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="booking-destination">
+                                        <img src="https://images.unsplash.com/photo-1503917988258-f87a78e3c995?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Paris">
+                                        <span>Paris, France</span>
+                                    </div>
+                                </td>
+                                <td>Michael Brown</td>
+                                <td>Jun 15-22, 2023</td>
+                                <td>$2,450</td>
+                                <td><span class="booking-status status-confirmed">Confirmed</span></td>
+                                <td><button class="action-btn view-btn">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="booking-destination">
+                                        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Bali">
+                                        <span>Bali, Indonesia</span>
+                                    </div>
+                                </td>
+                                <td>Emily Davis</td>
+                                <td>Aug 5-15, 2023</td>
+                                <td>$3,200</td>
+                                <td><span class="booking-status status-pending">Pending</span></td>
+                                <td><button class="action-btn view-btn">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="booking-destination">
+                                        <img src="https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Tokyo">
+                                        <span>Tokyo, Japan</span>
+                                    </div>
+                                </td>
+                                <td>Robert Wilson</td>
+                                <td>Apr 1-10, 2024</td>
+                                <td>$4,500</td>
+                                <td><span class="booking-status status-confirmed">Confirmed</span></td>
+                                <td><button class="action-btn view-btn">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="booking-destination">
+                                        <img src="https://images.unsplash.com/photo-1518391846015-55a9cc003b25?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Safari">
+                                        <span>Serengeti Safari</span>
+                                    </div>
+                                </td>
+                                <td>Jessica Lee</td>
+                                <td>Mar 10-20, 2023</td>
+                                <td>$5,800</td>
+                                <td><span class="booking-status status-cancelled">Cancelled</span></td>
+                                <td><button class="action-btn view-btn">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="booking-destination">
+                                        <img src="https://images.unsplash.com/photo-1533929736458-ca588d08c8be?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="New York">
+                                        <span>New York, USA</span>
+                                    </div>
+                                </td>
+                                <td>David Johnson</td>
+                                <td>Sep 5-12, 2023</td>
+                                <td>$3,750</td>
+                                <td><span class="booking-status status-confirmed">Confirmed</span></td>
+                                <td><button class="action-btn view-btn">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="booking-destination">
+                                        <img src="https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Rome">
+                                        <span>Rome, Italy</span>
+                                    </div>
+                                </td>
+                                <td>Sarah Miller</td>
+                                <td>Oct 10-20, 2023</td>
+                                <td>$2,950</td>
+                                <td><span class="booking-status status-confirmed">Confirmed</span></td>
+                                <td><button class="action-btn view-btn">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+            </div>
 
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <div>
-                            <div class="stat-value">$84,760</div>
-                            <div class="stat-title">Total Revenue</div>
+            <!-- Destinations Section -->
+            <div id="destinations" class="section-content">
+                <h2 class="section-title">
+                    <i class="fas fa-map-marked-alt"></i> All Destinations
+                </h2>
+                <div class="destinations-grid">
+                    <div class="destination-card">
+                        <div class="destination-image">
+                            <img src="https://images.unsplash.com/photo-1503917988258-f87a78e3c995?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Paris">
                         </div>
-                        <div class="stat-icon revenue">
-                            <i class="fas fa-dollar-sign"></i>
+                        <div class="destination-info">
+                            <div class="destination-name">Paris, France</div>
+                            <div class="destination-bookings">
+                                <i class="fas fa-suitcase"></i>
+                                <span>128 bookings</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="stat-change positive">
-                        <i class="fas fa-arrow-up"></i> 8.3% from last month
-                    </div>
-                </div>
 
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <div>
-                            <div class="stat-value">568</div>
-                            <div class="stat-title">Active Customers</div>
+                    <div class="destination-card">
+                        <div class="destination-image">
+                            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Bali">
                         </div>
-                        <div class="stat-icon customers">
-                            <i class="fas fa-users"></i>
+                        <div class="destination-info">
+                            <div class="destination-name">Bali, Indonesia</div>
+                            <div class="destination-bookings">
+                                <i class="fas fa-suitcase"></i>
+                                <span>98 bookings</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="stat-change positive">
-                        <i class="fas fa-arrow-up"></i> 5.2% from last month
-                    </div>
-                </div>
 
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <div>
-                            <div class="stat-value">42</div>
-                            <div class="stat-title">Destinations</div>
+                    <div class="destination-card">
+                        <div class="destination-image">
+                            <img src="https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Tokyo">
                         </div>
-                        <div class="stat-icon destinations">
-                            <i class="fas fa-map-marked-alt"></i>
+                        <div class="destination-info">
+                            <div class="destination-name">Tokyo, Japan</div>
+                            <div class="destination-bookings">
+                                <i class="fas fa-suitcase"></i>
+                                <span>87 bookings</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="stat-change positive">
-                        <i class="fas fa-arrow-up"></i> 2 new this month
+
+                    <div class="destination-card">
+                        <div class="destination-image">
+                            <img src="https://images.unsplash.com/photo-1518391846015-55a9cc003b25?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Safari">
+                        </div>
+                        <div class="destination-info">
+                            <div class="destination-name">Serengeti Safari</div>
+                            <div class="destination-bookings">
+                                <i class="fas fa-suitcase"></i>
+                                <span>65 bookings</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-image">
+                            <img src="https://images.unsplash.com/photo-1533929736458-ca588d08c8be?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="New York">
+                        </div>
+                        <div class="destination-info">
+                            <div class="destination-name">New York, USA</div>
+                            <div class="destination-bookings">
+                                <i class="fas fa-suitcase"></i>
+                                <span>112 bookings</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-image">
+                            <img src="https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Rome">
+                        </div>
+                        <div class="destination-info">
+                            <div class="destination-name">Rome, Italy</div>
+                            <div class="destination-bookings">
+                                <i class="fas fa-suitcase"></i>
+                                <span>89 bookings</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-image">
+                            <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="London">
+                        </div>
+                        <div class="destination-info">
+                            <div class="destination-name">London, UK</div>
+                            <div class="destination-bookings">
+                                <i class="fas fa-suitcase"></i>
+                                <span>103 bookings</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-image">
+                            <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Sydney">
+                        </div>
+                        <div class="destination-info">
+                            <div class="destination-name">Sydney, Australia</div>
+                            <div class="destination-bookings">
+                                <i class="fas fa-suitcase"></i>
+                                <span>76 bookings</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Recent Bookings -->
-            <h2 class="section-title">
-                <i class="fas fa-clock"></i> Recent Bookings
-            </h2>
-
-            <div class="recent-bookings">
-                <table class="booking-table">
-                    <thead>
-                        <tr>
-                            <th>Destination</th>
-                            <th>Customer</th>
-                            <th>Date</th>
-                            <th>Amount</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="booking-destination">
-                                    <img src="https://images.unsplash.com/photo-1503917988258-f87a78e3c995?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Paris">
-                                    <span>Paris, France</span>
-                                </div>
-                            </td>
-                            <td>Michael Brown</td>
-                            <td>Jun 15-22, 2023</td>
-                            <td>$2,450</td>
-                            <td><span class="booking-status status-confirmed">Confirmed</span></td>
-                            <td><button class="action-btn view-btn">View</button></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="booking-destination">
-                                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Bali">
-                                    <span>Bali, Indonesia</span>
-                                </div>
-                            </td>
-                            <td>Emily Davis</td>
-                            <td>Aug 5-15, 2023</td>
-                            <td>$3,200</td>
-                            <td><span class="booking-status status-pending">Pending</span></td>
-                            <td><button class="action-btn view-btn">View</button></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="booking-destination">
-                                    <img src="https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Tokyo">
-                                    <span>Tokyo, Japan</span>
-                                </div>
-                            </td>
-                            <td>Robert Wilson</td>
-                            <td>Apr 1-10, 2024</td>
-                            <td>$4,500</td>
-                            <td><span class="booking-status status-confirmed">Confirmed</span></td>
-                            <td><button class="action-btn view-btn">View</button></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="booking-destination">
-                                    <img src="https://images.unsplash.com/photo-1518391846015-55a9cc003b25?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Safari">
-                                    <span>Serengeti Safari</span>
-                                </div>
-                            </td>
-                            <td>Jessica Lee</td>
-                            <td>Mar 10-20, 2023</td>
-                            <td>$5,800</td>
-                            <td><span class="booking-status status-cancelled">Cancelled</span></td>
-                            <td><button class="action-btn view-btn">View</button></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- Customers Section -->
+            <div id="customers" class="section-content">
+                <h2 class="section-title">
+                    <i class="fas fa-users"></i> Customer Management
+                </h2>
+                <div class="recent-bookings">
+                    <table class="booking-table">
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Bookings</th>
+                                <th>Last Booking</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="booking-destination">
+                                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Customer">
+                                        <span>Michael Brown</span>
+                                    </div>
+                                </td>
+                                <td>michael@example.com</td>
+                                <td>+1 555-123-4567</td>
+                                <td>5</td>
+                                <td>Paris, Jun 2023</td>
+                                <td><button class="action-btn view-btn">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="booking-destination">
+                                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Customer">
+                                        <span>Emily Davis</span>
+                                    </div>
+                                </td>
+                                <td>emily@example.com</td>
+                                <td>+1 555-987-6543</td>
+                                <td>3</td>
+                                <td>Bali, Aug 2023</td>
+                                <td><button class="action-btn view-btn">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="booking-destination">
+                                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Customer">
+                                        <span>Robert Wilson</span>
+                                    </div>
+                                </td>
+                                <td>robert@example.com</td>
+                                <td>+1 555-456-7890</td>
+                                <td>7</td>
+                                <td>Tokyo, Apr 2024</td>
+                                <td><button class="action-btn view-btn">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="booking-destination">
+                                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Customer">
+                                        <span>Jessica Lee</span>
+                                    </div>
+                                </td>
+                                <td>jessica@example.com</td>
+                                <td>+1 555-789-0123</td>
+                                <td>2</td>
+                                <td>Serengeti, Mar 2023</td>
+                                <td><button class="action-btn view-btn">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="booking-destination">
+                                        <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Customer">
+                                        <span>David Johnson</span>
+                                    </div>
+                                </td>
+                                <td>david@example.com</td>
+                                <td>+1 555-234-5678</td>
+                                <td>4</td>
+                                <td>New York, Sep 2023</td>
+                                <td><button class="action-btn view-btn">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="booking-destination">
+                                        <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Customer">
+                                        <span>Sarah Miller</span>
+                                    </div>
+                                </td>
+                                <td>sarah@example.com</td>
+                                <td>+1 555-345-6789</td>
+                                <td>6</td>
+                                <td>Rome, Oct 2023</td>
+                                <td><button class="action-btn view-btn">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <!-- Popular Destinations -->
-            <h2 class="section-title" style="margin-top: 30px;">
-                <i class="fas fa-fire"></i> Popular Destinations
-            </h2>
+            <!-- Reports Section -->
+            <div id="reports" class="section-content">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-line"></i> Business Reports
+                </h2>
 
-            <div class="destinations-grid">
-                <div class="destination-card">
-                    <div class="destination-image">
-                        <img src="https://images.unsplash.com/photo-1503917988258-f87a78e3c995?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Paris">
-                    </div>
-                    <div class="destination-info">
-                        <div class="destination-name">Paris, France</div>
-                        <div class="destination-bookings">
-                            <i class="fas fa-suitcase"></i>
-                            <span>128 bookings</span>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-value">Monthly</div>
+                                <div class="stat-title">Revenue Report</div>
+                            </div>
+                            <div class="stat-icon revenue">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
                         </div>
+                        <canvas id="revenueChart" height="150"></canvas>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-value">Top</div>
+                                <div class="stat-title">Destinations</div>
+                            </div>
+                            <div class="stat-icon destinations">
+                                <i class="fas fa-map-marked-alt"></i>
+                            </div>
+                        </div>
+                        <canvas id="destinationsChart" height="150"></canvas>
                     </div>
                 </div>
 
-                <div class="destination-card">
-                    <div class="destination-image">
-                        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Bali">
-                    </div>
-                    <div class="destination-info">
-                        <div class="destination-name">Bali, Indonesia</div>
-                        <div class="destination-bookings">
-                            <i class="fas fa-suitcase"></i>
-                            <span>98 bookings</span>
+                <div class="stats-grid" style="margin-top: 20px;">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-value">Customer</div>
+                                <div class="stat-title">Acquisition</div>
+                            </div>
+                            <div class="stat-icon customers">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
                         </div>
+                        <canvas id="customersChart" height="150"></canvas>
                     </div>
-                </div>
 
-                <div class="destination-card">
-                    <div class="destination-image">
-                        <img src="https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Tokyo">
-                    </div>
-                    <div class="destination-info">
-                        <div class="destination-name">Tokyo, Japan</div>
-                        <div class="destination-bookings">
-                            <i class="fas fa-suitcase"></i>
-                            <span>87 bookings</span>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-value">Booking</div>
+                                <div class="stat-title">Status Overview</div>
+                            </div>
+                            <div class="stat-icon bookings">
+                                <i class="fas fa-suitcase-rolling"></i>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="destination-card">
-                    <div class="destination-image">
-                        <img src="https://images.unsplash.com/photo-1518391846015-55a9cc003b25?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Safari">
-                    </div>
-                    <div class="destination-info">
-                        <div class="destination-name">Serengeti Safari</div>
-                        <div class="destination-bookings">
-                            <i class="fas fa-suitcase"></i>
-                            <span>65 bookings</span>
-                        </div>
+                        <canvas id="bookingsChart" height="150"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Sidebar menu item click handler
         const menuItems = document.querySelectorAll('.menu-item');
+        const sectionContents = document.querySelectorAll('.section-content');
+
         menuItems.forEach(item => {
             item.addEventListener('click', () => {
+                // Remove active class from all menu items and sections
                 menuItems.forEach(i => i.classList.remove('active'));
+                sectionContents.forEach(section => section.classList.remove('active'));
+
+                // Add active class to clicked menu item
                 item.classList.add('active');
+
+                // Show the corresponding section
+                const sectionId = item.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+
+                // If reports section is shown, generate charts
+                if (sectionId === 'reports') {
+                    generateCharts();
+                }
             });
         });
 
@@ -808,10 +1205,42 @@
         // View button click handler for bookings
         const viewButtons = document.querySelectorAll('.view-btn');
         viewButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const bookingRow = button.closest('tr');
-                const destination = bookingRow.querySelector('.booking-destination span').textContent;
-                alert(`Viewing details for booking to ${destination}`);
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const row = button.closest('tr');
+                let content = '';
+
+                if (row.querySelector('.booking-destination span')) {
+                    // Bookings view
+                    const destination = row.querySelector('.booking-destination span').textContent;
+                    const customer = row.querySelector('td:nth-child(2)').textContent;
+                    const date = row.querySelector('td:nth-child(3)').textContent;
+                    const amount = row.querySelector('td:nth-child(4)').textContent;
+                    const status = row.querySelector('.booking-status').textContent;
+
+                    content = `Booking Details:
+Destination: ${destination}
+Customer: ${customer}
+Dates: ${date}
+Amount: ${amount}
+Status: ${status}`;
+                } else {
+                    // Customers view
+                    const customer = row.querySelector('.booking-destination span').textContent;
+                    const email = row.querySelector('td:nth-child(2)').textContent;
+                    const phone = row.querySelector('td:nth-child(3)').textContent;
+                    const bookings = row.querySelector('td:nth-child(4)').textContent;
+                    const lastBooking = row.querySelector('td:nth-child(5)').textContent;
+
+                    content = `Customer Details:
+Name: ${customer}
+Email: ${email}
+Phone: ${phone}
+Total Bookings: ${bookings}
+Last Booking: ${lastBooking}`;
+                }
+
+                alert(content);
             });
         });
 
@@ -820,9 +1249,149 @@
         destinationCards.forEach(card => {
             card.addEventListener('click', () => {
                 const destinationName = card.querySelector('.destination-name').textContent;
-                alert(`Showing details for ${destinationName}`);
+                const bookings = card.querySelector('.destination-bookings span').textContent;
+                alert(`Destination: ${destinationName}\n${bookings}`);
             });
         });
+
+        // Function to generate charts for reports section
+        function generateCharts() {
+            // Revenue Chart
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Revenue ($)',
+                        data: [6500, 5900, 8000, 8100, 8600, 8250, 9500, 10500, 9200, 8800, 7500, 11000],
+                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                        borderColor: 'rgba(52, 152, 219, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Destinations Chart
+            const destinationsCtx = document.getElementById('destinationsChart').getContext('2d');
+            new Chart(destinationsCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Paris', 'Bali', 'Tokyo', 'New York', 'Rome', 'London'],
+                    datasets: [{
+                        label: 'Bookings',
+                        data: [128, 98, 87, 112, 89, 103],
+                        backgroundColor: [
+                            'rgba(230, 126, 34, 0.7)',
+                            'rgba(46, 204, 113, 0.7)',
+                            'rgba(52, 152, 219, 0.7)',
+                            'rgba(155, 89, 182, 0.7)',
+                            'rgba(241, 196, 15, 0.7)',
+                            'rgba(231, 76, 60, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(230, 126, 34, 1)',
+                            'rgba(46, 204, 113, 1)',
+                            'rgba(52, 152, 219, 1)',
+                            'rgba(155, 89, 182, 1)',
+                            'rgba(241, 196, 15, 1)',
+                            'rgba(231, 76, 60, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Customers Chart
+            const customersCtx = document.getElementById('customersChart').getContext('2d');
+            new Chart(customersCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'New Customers',
+                        data: [25, 30, 45, 40, 35, 50, 55, 60, 45, 40, 35, 50],
+                        backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                        borderColor: 'rgba(46, 204, 113, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Bookings Chart
+            const bookingsCtx = document.getElementById('bookingsChart').getContext('2d');
+            new Chart(bookingsCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Confirmed', 'Pending', 'Cancelled'],
+                    datasets: [{
+                        data: [65, 15, 20],
+                        backgroundColor: [
+                            'rgba(46, 204, 113, 0.7)',
+                            'rgba(241, 196, 15, 0.7)',
+                            'rgba(231, 76, 60, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(46, 204, 113, 1)',
+                            'rgba(241, 196, 15, 1)',
+                            'rgba(231, 76, 60, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
     </script>
 </body>
 
