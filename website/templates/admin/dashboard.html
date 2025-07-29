@@ -1,32 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>Admin Dashboard</title>
-    <style>
-        table { border-collapse: collapse; width: 100%; margin-bottom: 2rem; }
-        th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
-        form { margin-bottom: 2rem; }
-        input, button { padding: 0.3rem 0.6rem; margin-right: 0.5rem; }
-        .section { margin-bottom: 3rem; }
-        .flash { color: red; }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard - TravelPro</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background: #0077b6;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    h1, h2, h3 {
+      color: #023e8a;
+    }
+
+    .section {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      margin-bottom: 2rem;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.75rem;
+      text-align: left;
+    }
+
+    th {
+      background-color: #caf0f8;
+    }
+
+    form {
+      margin-top: 1rem;
+      display: inline; /* For inline delete buttons */
+    }
+
+    input, textarea, button, select {
+      padding: 0.6rem;
+      margin: 0.3rem 0.5rem 0.3rem 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #0077b6;
+      box-shadow: 0 0 4px rgba(0, 119, 182, 0.4);
+    }
+
+    button {
+      background-color: #0077b6;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #023e8a;
+    }
+
+    .flash {
+      margin: 1rem 0;
+      padding: 1rem;
+      background-color: #ffd6d6;
+      border-left: 5px solid #d62828;
+      color: #900;
+      border-radius: 5px;
+    }
+
+    .report-link {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background-color: #00b4d8;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    .report-link:hover {
+      background-color: #0077b6;
+    }
+
+    .action-buttons button, .action-buttons a {
+      margin-right: 0.5rem;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.9rem;
+      border-radius: 4px;
+    }
+
+    .action-buttons a {
+      background-color: #0077b6;
+      color: white;
+      text-decoration: none;
+    }
+
+    .action-buttons a:hover {
+      background-color: #023e8a;
+    }
+
+    .action-buttons button {
+      background-color: #d62828;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .action-buttons button:hover {
+      background-color: #a0211d;
+    }
+  </style>
 </head>
 <body>
 
-<h1>Welcome, {{ current_user.username }}</h1>
-<p><a href="{{ url_for('main.logout') }}">Logout</a></p>
+<header>
+  <h1>Welcome, {{ current_user.first_name }} {{ current_user.last_name }}</h1>
+  <a href="{{ url_for('main.logout') }}">Logout</a>
+</header>
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    {% for category, message in messages %}
-      <div class="flash {{ category }}">{{ message }}</div>
-    {% endfor %}
-  {% endif %}
-{% endwith %}
+<div class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
 
-<div class="section">
-    <h2>Stats</h2>
+  <div class="section">
+    <h2>📊 Stats</h2>
     <p><strong>Total Revenue:</strong> {{ total_revenue or 0 }}</p>
     <p><strong>Most Booked Tour:</strong>
       {% if most_booked %}
@@ -35,142 +169,123 @@
         No bookings yet.
       {% endif %}
     </p>
-</div>
+  </div>
 
-<div class="section">
-    <h2>Users</h2>
+  <div class="section">
+    <h2>👥 Users</h2>
     <table>
-        <thead><tr><th>ID</th><th>Username</th><th>Email</th><th>Admin</th><th>Actions</th></tr></thead>
-        <tbody>
+      <thead><tr><th>ID</th><th>Username</th><th>First Name</th><th>Last Name</th><th>Admin</th><th>Actions</th></tr></thead>
+      <tbody>
         {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ 'Yes' if user.is_admin else 'No' }}</td>
-                <td>
-                    <form action="{{ url_for('custom_admin.delete_user', id=user.id) }}" method="get" style="display:inline">
-                        <button onclick="return confirm('Delete user {{ user.username }}?')" type="submit">Delete</button>
-                    </form>
-                    <!-- Edit functionality requires more UI, so omitted here -->
-                </td>
-            </tr>
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.first_name }}</td>
+          <td>{{ user.last_name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ 'Yes' if user.is_admin else 'No' }}</td>
+          <td>
+            <form action="{{ url_for('custom_admin.delete_user', id=user.id) }}" method="POST" style="display:inline">
+              <button onclick="return confirm('Delete user {{ user.first_name }} {{ user.last_name }}?')" type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
         {% endfor %}
-        </tbody>
+      </tbody>
     </table>
 
     <h3>Add User</h3>
     <form action="{{ url_for('custom_admin.add_user') }}" method="POST">
-        <input type="text" name="username" placeholder="Username" required />
-        <input type="email" name="email" placeholder="Email" required />
-        <button type="submit">Add User</button>
+      <input type="text" name="first_name" placeholder="First Name" required />
+      <input type="text" name="last_name" placeholder="Last Name" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="password" name="password" placeholder="Password" required />
+    
+      <button type="submit">Add User</button>
     </form>
-</div>
+  </div>
 
-<div class="section">
-    <h2>Tours</h2>
+  <div class="section">
+    <h2>🧭 Tours</h2>
     <table>
-        <thead><tr><th>ID</th><th>Title</th><th>Description</th><th>Price</th><th>Actions</th></tr></thead>
-        <tbody>
+      <thead>
+        <tr>
+          <th>ID</th><th>Title</th><th>Description</th><th>Price</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
         {% for tour in tours %}
-            <tr>
-                <td>{{ tour.id }}</td>
-                <td>{{ tour.title }}</td>
-                <td>{{ tour.description }}</td>
-                <td>{{ tour.price }}</td>
-                <td>
-                    <form action="{{ url_for('custom_admin.delete_tour', id=tour.id) }}" method="get" style="display:inline">
-                        <button onclick="return confirm('Delete tour {{ tour.title }}?')" type="submit">Delete</button>
-                    </form>
-                </td>
-            </tr>
+        <tr>
+          <td>{{ tour.id }}</td>
+          <td>{{ tour.title }}</td>
+          <td>{{ tour.description }}</td>
+          <td>{{ tour.price }}</td>
+          <td class="action-buttons">
+            <a href="{{ url_for('custom_admin.edit_tour', tour_id=tour.id) }}">Edit</a>
+            <form action="{{ url_for('custom_admin.delete_tour', tour_id=tour.id) }}" method="POST" style="display:inline;">
+              <button onclick="return confirm('Delete tour {{ tour.title }}?')" type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
         {% endfor %}
-        </tbody>
+      </tbody>
     </table>
 
-    {% for tour in tours %}
     <h3>Add Tour</h3>
     <form action="{{ url_for('custom_admin.add_tour') }}" method="POST">
-        <input type="text" name="title" placeholder="Title" required />
-        <input type="text" name="description" placeholder="Description" />
-        <input type="number" step="0.01" name="price" placeholder="Price" required />
-        <button type="submit">Add Tour</button>
+      <input type="text" name="title" placeholder="Title" required />
+      <input type="text" name="description" placeholder="Description" />
+      <input type="number" step="0.01" name="price" placeholder="Price" required />
+      <label for="destination_id">Destination:</label>
+      <select name="destination_id">
+        <option value="">-- Select Destination (optional) --</option>
+        {% for destination in destinations %}
+            <option value="{{ destination.id }}">{{ destination.name }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Add Tour</button>
     </form>
 
-    <body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
-    <div class="bg-white p-8 rounded shadow-md w-full max-w-lg">
-        {% for tour in tours %}
-        <h2 class="text-2xl font-semibold mb-6">Edit Tour: {{ tour.title }}</h2>
-        <form action="{{ url_for('custom_admin.edit_tour', id=tour.id) }}" method="POST">
-            <div class="mb-4">
-                <label for="title" class="block text-gray-700">Title</label>
-                <input type="text" name="title" id="title" value="{{ tour.title }}" required
-                       class="w-full px-4 py-2 border rounded" />
-            </div>
+  </div>
 
-            <div class="mb-4">
-                <label for="description" class="block text-gray-700">Description</label>
-                <textarea name="description" id="description" required
-                          class="w-full px-4 py-2 border rounded">{{ tour.description }}</textarea>
-            </div>
-
-            <div class="mb-4">
-                <label for="price" class="block text-gray-700">Price</label>
-                <input type="number" name="price" id="price" value="{{ tour.price }}" required step="0.01"
-                       class="w-full px-4 py-2 border rounded" />
-            </div>
-
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                Update Tour
-            </button>
-        </form>
-        {% endfor %}
-    </div>
-    {% endfor %}
-</body>
-
-</div>
-
-<div class="section">
-    <h2>Bookings</h2>
+  <div class="section">
+    <h2>📝 Bookings</h2>
     <table>
-        <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Tour</th><th>Date Booked</th></tr></thead>
-        <tbody>
+      <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Tour</th><th>Date Booked</th></tr></thead>
+      <tbody>
         {% for booking in bookings %}
-            <tr>
-                <td>{{ booking.id }}</td>
-                <td>{{ booking.name }}</td>
-                <td>{{ booking.email }}</td>
-                <td>{{ booking.tour.title if booking.tour else 'N/A' }}</td>
-                <td>{{ booking.date_booked.strftime('%Y-%m-%d') }}</td>
-            </tr>
+        <tr>
+          <td>{{ booking.id }}</td>
+          <td>{{ booking.name }}</td>
+          <td>{{ booking.email }}</td>
+          <td>{{ booking.tour.title if booking.tour else 'N/A' }}</td>
+          <td>{{ booking.date_booked.strftime('%Y-%m-%d') }}</td>
+        </tr>
         {% endfor %}
-        </tbody>
+      </tbody>
     </table>
-</div>
+  </div>
 
-<div class="section">
-    <h2>Inquiries</h2>
+  <div class="section">
+    <h2>📩 Inquiries</h2>
     <table>
-        <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Message</th></tr></thead>
-        <tbody>
+      <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Message</th></tr></thead>
+      <tbody>
         {% for inquiry in inquiries %}
-            <tr>
-                <td>{{ inquiry.id }}</td>
-                <td>{{ inquiry.name }}</td>
-                <td>{{ inquiry.email }}</td>
-                <td>{{ inquiry.message }}</td>
-            </tr>
+        <tr>
+          <td>{{ inquiry.id }}</td>
+          <td>{{ inquiry.name }}</td>
+          <td>{{ inquiry.email }}</td>
+          <td>{{ inquiry.message }}</td>
+        </tr>
         {% endfor %}
-        </tbody>
+      </tbody>
     </table>
+  </div>
+
+  <a href="{{ url_for('custom_admin.view_reports') }}" class="report-link">
+    📈 View Reports
+  </a>
 </div>
-
-<a href="{{ url_for('custom_admin.view_reports') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-    View Reports
-</a>
-
-
 
 </body>
 </html>

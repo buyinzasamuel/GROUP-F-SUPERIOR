@@ -4,13 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Bookings | Wanderlust Tours</title>
+    <title>My Bookings |Superiors Tour and Travels</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
     <style>
          :root {
             --primary: #4e60ff;
@@ -488,110 +485,150 @@
     <div class="container">
         <header>
             <div class="logo">Superiors<span>Adventures</span></div>
-            <!-- <div class="user-profile">
+            <div class="user-profile">
                 <span>Buyinza Samuel</span>
                 <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Profile">
-            </div> -->
+            </div>
         </header>
 
         <h1 class="page-title">My Bookings</h1>
 
         <div class="filter-tabs">
-    <div class="filter-tab active" data-status="all">All Bookings</div>
-    <div class="filter-tab" data-status="Completed">Completed</div>
-    <div class="filter-tab" data-status="Cancelled">Cancelled</div>
-</div>
-
-
-{% for booking in bookings %}
-<div class="booking-card"data-booking-id="{{ booking.id }}" data-status="{{ booking.status }}">
-    <img src="{{ url_for('static', filename='uploads/' ~ booking.tour.image) }}" alt="Tour Image" class="booking-image">
-    <div class="booking-details">
-        <div class="booking-header">
-            <h3 class="booking-title">Booking Reference: {{ booking.booking_reference }}</h3>
-            <span class="booking-status status-{{ booking.status | lower }}">{{ booking.status }}</span>
+            <div class="filter-tab active">All Bookings</div>
+            <div class="filter-tab">Upcoming</div>
+            <div class="filter-tab">Completed</div>
+            <div class="filter-tab">Cancelled</div>
         </div>
-        <div class="booking-info">
-            <div class="info-row">
-                <i class="fas fa-user info-icon"></i>
-                <span class="info-text">Full Name: {{ booking.full_name }}</span>
+
+        <div class="bookings-container">
+            <!-- Booking Card 1 -->
+            <div class="booking-card">
+                <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Paris Tour" class="booking-image">
+                <div class="booking-details">
+                    <div class="booking-header">
+                        <h3 class="booking-title">Paris Romantic Getaway</h3>
+                        <span class="booking-status status-confirmed">Confirmed</span>
+                    </div>
+                    <div class="booking-info">
+                        <div class="info-row">
+                            <i class="fas fa-calendar-alt info-icon"></i>
+                            <span class="info-text">15 - 22 June 2023</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-users info-icon"></i>
+                            <span class="info-text">2 Adults</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-hotel info-icon"></i>
+                            <span class="info-text">Le Méridien Etoile</span>
+                        </div>
+                    </div>
+                    <div class="booking-footer">
+                        <div class="booking-price">$1,299</div>
+                        <div class="booking-actions">
+                            <button class="btn btn-outline" onclick="openBookingDetails(1)">Details</button>
+                            <button class="btn btn-primary" onclick="openPaymentModal(3)">Book Again</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="info-row">
-                <i class="fas fa-envelope info-icon"></i>
-                <span class="info-text">Email: {{ booking.email }}</span>
+
+            <!-- Booking Card 2 -->
+            <div class="booking-card">
+                <img src="https://images.unsplash.com/photo-1503917988258-f87a78e3c995?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Bali Tour" class="booking-image">
+                <div class="booking-details">
+                    <div class="booking-header">
+                        <h3 class="booking-title">Bali Adventure Package</h3>
+                        <span class="booking-status status-pending">Pending</span>
+                    </div>
+                    <div class="booking-info">
+                        <div class="info-row">
+                            <i class="fas fa-calendar-alt info-icon"></i>
+                            <span class="info-text">5 - 15 August 2023</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-users info-icon"></i>
+                            <span class="info-text">4 Adults</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-hotel info-icon"></i>
+                            <span class="info-text">The Kayon Resort</span>
+                        </div>
+                    </div>
+                    <div class="booking-footer">
+                        <div class="booking-price">$2,450</div>
+                        <div class="booking-actions">
+                            <button class="btn btn-outline" onclick="openBookingDetails(2)">Details</button>
+                            <button class="btn btn-primary" onclick="openPaymentModal(3)">Book Again</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="info-row">
-                <i class="fas fa-phone info-icon"></i>
-                <span class="info-text">Phone: {{ booking.phone_number }}</span>
+
+            <!-- Booking Card 3 -->
+            <div class="booking-card">
+                <img src="c:\Users\YSJ COMPUTERS\OneDrive\Pictures\IMG-20250721-WA0006.jpg">
+                <div class="booking-details">
+                    <div class="booking-header">
+                        <h3 class="booking-title">Tokyo Cultural Experience</h3>
+                        <span class="booking-status status-cancelled">Cancelled</span>
+                    </div>
+                    <div class="booking-info">
+                        <div class="info-row">
+                            <i class="fas fa-calendar-alt info-icon"></i>
+                            <span class="info-text">10 - 20 March 2023</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-users info-icon"></i>
+                            <span class="info-text">1 Adult</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-hotel info-icon"></i>
+                            <span class="info-text">Park Hotel Tokyo</span>
+                        </div>
+                    </div>
+                    <div class="booking-footer">
+                        <div class="booking-price">$1,799</div>
+                        <div class="booking-actions">
+                            <button class="btn btn-outline" onclick="openBookingDetails(3)">Details</button>
+                            <button class="btn btn-primary" onclick="openPaymentModal(3)">Book Again</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="info-row">
-                <i class="fas fa-calendar-alt info-icon"></i>
-                <span class="info-text">Booking Date: {{ booking.booking_date.strftime('%d %b %Y %H:%M') }}</span>
-            </div>
-            <div class="info-row">
-                <i class="fas fa-map-marker-alt info-icon"></i>
-                <span class="info-text">Tour: {{ booking.tour.title }}</span>
-            </div>
-            <div class="info-row">
-                <i class="fas fa-dollar-sign info-icon"></i>
-                <span class="info-text">Price: ${{ booking.tour.price }}</span>
+
+            <!-- Booking Card 4 -->
+            <div class="booking-card">
+                <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="New York Tour" class="booking-image">
+                <div class="booking-details">
+                    <div class="booking-header">
+                        <h3 class="booking-title">New York City Explorer</h3>
+                        <span class="booking-status status-confirmed">Confirmed</span>
+                    </div>
+                    <div class="booking-info">
+                        <div class="info-row">
+                            <i class="fas fa-calendar-alt info-icon"></i>
+                            <span class="info-text">1 - 8 December 2023</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-users info-icon"></i>
+                            <span class="info-text">2 Adults, 1 Child</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-hotel info-icon"></i>
+                            <span class="info-text">The Plaza Hotel</span>
+                        </div>
+                    </div>
+                    <div class="booking-footer">
+                        <div class="booking-price">$2,199</div>
+                        <div class="booking-actions">
+                            <button class="btn btn-outline" onclick="openBookingDetails(4)">Details</button>
+                            <button class="btn btn-primary" onclick="openPaymentModal(3)">Book Again</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="booking-footer">
-    {% if booking.status.strip().lower() not in ['completed', 'cancelled'] %}
-        <button class="btn btn-primary" onclick="openPaymentModal({{ booking.id }})">Make Payment</button>
-    {% endif %}
-
-    {% if booking.status.strip().lower() == 'pending' %}
-        <button class="btn btn-danger" onclick="cancelBooking({{ booking.id }})">Cancel Booking</button>
-    {% endif %}
-    
-    {% if booking.status.strip().lower() == 'completed' %}
-      <button class="btn btn-success"
-                    onclick="openReviewForm({{ booking.id }}, {{ booking.tour.id }}, '{{ booking.tour.title }}')">
-                Give a Review
-            </button>
-    {% endif %}
-
-
-</div>
-
-    </div>
-    </div>
-{% endfor %}
-
-<!-- One shared modal -->
-<div class="modal" id="reviewModal" style="display:none; margin-top: 15px; border:1px solid #ddd; padding:10px;">
-    <div style="background:#fff; padding:30px; border-radius:10px; max-width:500px; width:90%; box-shadow:0 5px 15px rgba(0,0,0,0.3); position:relative;">
-        <h4 id="modalTitle">Give a Review</h4>
-        <form id="reviewForm" onsubmit="submitReview(event)">
-            <label>Rating:</label><br>
-            <select name="rating" required>
-                <option value="" disabled selected>Select rating</option>
-                <option value="1">⭐</option>
-                <option value="2">⭐⭐</option>
-                <option value="3">⭐⭐⭐</option>
-                <option value="4">⭐⭐⭐⭐</option>
-                <option value="5">⭐⭐⭐⭐⭐</option>
-            </select><br><br>
-
-            <label>Comment:</label><br>
-            <textarea name="comment" rows="3" placeholder="Write your review..."></textarea><br><br>
-
-            <input type="hidden" name="bookingId">
-            <input type="hidden" name="tourId">
-
-            <button type="submit" class="btn btn-primary">Submit Review</button>
-            <button type="button" class="btn btn-link" onclick="closeReviewForm()">Cancel</button>
-        </form>
-    </div>    
-</div>
-
-
-    
-</div>
-
-
     </div>
 
     <!-- Booking Details Modal -->
@@ -620,7 +657,7 @@
                     </div>
                 </div>
 
-                <!-- <div class="form-group">
+                <div class="form-group">
                     <label class="form-label">Travelers</label>
                     <select id="travelersSelect" class="form-control">
                         <option value="1">1 Adult</option>
@@ -629,7 +666,7 @@
                         <option value="4">2 Adults, 2 Children</option>
                         <option value="5">Family (2 Adults, 3 Children)</option>
                     </select>
-                </div> -->
+                </div>
 
                 <div class="form-group">
                     <label class="form-label">Payment Method</label>
@@ -736,49 +773,6 @@
                 updateSelectedDates(selectedDates);
             }
         });
-
-
-function openReviewForm(bookingId, tourId, tourTitle) {
-    const modal = document.getElementById("reviewModal");
-    const form = document.getElementById("reviewForm");
-    const title = document.getElementById("modalTitle");
-
-    form.bookingId.value = bookingId;
-    form.tourId.value = tourId;
-    title.innerText = `Give a Review for ${tourTitle}`;
-
-    modal.style.display = "block";
-}
-
-function closeReviewForm() {
-    document.getElementById("reviewModal").style.display = "none";
-}
-
-function submitReview(event) {
-    event.preventDefault();
-
-    const form = event.target;
-    const rating = form.rating.value;
-    const comment = form.comment.value;
-    const bookingId = form.bookingId.value;
-    const tourId = form.tourId.value;
-
-    console.log("Submitting review:", { bookingId, tourId, rating, comment });
-
-    // Example POST request (replace with real AJAX/fetch if needed)
-    // fetch('/submit-review', {
-    //     method: 'POST',
-    //     headers: {'Content-Type': 'application/json'},
-    //     body: JSON.stringify({ bookingId, tourId, rating, comment })
-    // }).then(response => {
-    //     // handle success
-    //     closeReviewForm();
-    // });
-
-    alert("Review submitted!");
-    closeReviewForm();
-}
-
 
         // Update selected dates display
         function updateSelectedDates(dates) {
@@ -955,7 +949,6 @@ function submitReview(event) {
 
             // Show the selected payment form
             document.getElementById(`${method}Form`).classList.add('active');
-
         }
 
         // Format card number with spaces
@@ -1042,30 +1035,36 @@ function submitReview(event) {
             return true;
         }
 
-  // ✅ close processPayment()
+        function processPayment() {
+            if (!validatePaymentForm()) {
+                return;
+            }
+
+            // Show loading spinner
+            document.getElementById('paymentSpinner').style.display = 'block';
+            document.getElementById('paymentFormContent').style.opacity = '0.5';
+            document.querySelector('.submit-btn').disabled = true;
+
+            // Simulate payment processing (in a real app, this would call your payment API)
+            setTimeout(() => {
+                // Hide spinner and show success message
+                document.getElementById('paymentSpinner').style.display = 'none';
+                document.getElementById('paymentFormContent').style.display = 'none';
+                document.getElementById('paymentSuccess').style.display = 'block';
+
+                // In a real app, you would update the booking status here
+                console.log(`Payment processed for booking ${currentBookingId} using ${selectedPaymentMethod}`);
+            }, 2000);
+        }
 
         function cancelBooking(bookingId) {
-    if (confirm("Are you sure you want to cancel this booking?")) {
-        fetch(`/cancel_booking/${bookingId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(res => {
-            if (res.ok) {
+            if (confirm("Are you sure you want to cancel this booking?")) {
+                // In a real app, you would call your API to cancel the booking
                 alert(`Booking #${bookingId} has been cancelled.`);
-                location.reload(); // or update the UI dynamically
-            } else {
-                alert('Failed to cancel the booking.');
+                console.log(`Cancelled booking ${bookingId}`);
+                // You would then update the UI to reflect the cancellation
             }
-        })
-        .catch(() => {
-            alert('Network error.');
-        });
-    }
-}
-
+        }
 
         // Filter tabs functionality
         document.querySelectorAll('.filter-tab').forEach(tab => {
@@ -1079,37 +1078,9 @@ function submitReview(event) {
 
         function filterBookings(filter) {
             console.log(`Filtering bookings by: ${filter}`);
-
             // In a real app, you would filter the bookings based on the selected filter
             // This is just a placeholder for the functionality
-        }    const tabs = document.querySelectorAll('.filter-tab');
-    const bookings = document.querySelectorAll('.booking-card');
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            // Remove 'active' class from all tabs
-            tabs.forEach(t => t.classList.remove('active'));
-            // Add 'active' to clicked tab
-            tab.classList.add('active');
-
-            const status = tab.getAttribute('data-status');
-
-            bookings.forEach(card => {
-                const cardStatus = card.getAttribute('data-status');
-                
-                if (status === 'all' || cardStatus === status) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-    });
-
-
-
-
-
+        }
     </script>
 </body>
 

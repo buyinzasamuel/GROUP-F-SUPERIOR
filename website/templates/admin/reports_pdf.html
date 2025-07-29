@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tour Report</title>
+    <style>
+        body {
+            font-family: "Arial", sans-serif;
+            font-size: 14px;
+            margin: 30px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .summary {
+            margin-bottom: 40px;
+        }
+
+        .summary p {
+            font-size: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            border: 1px solid #444;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #eee;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Superior Tours & Travel</h1>
+    <h2>Admin Report (PDF Export)</h2>
+
+    <div class="summary">
+        <p><strong>Total Bookings:</strong> {{ total_bookings }}</p>
+        <p><strong>Total Revenue:</strong> ${{ '%.2f' | format(total_revenue) }}</p>
+    </div>
+
+    <h2>Top 5 Popular Destinations</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Destination</th>
+                <th>Bookings</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for destination, booking_count in popular_destinations %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ destination.name }}</td>
+                <td>{{ booking_count }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="footer">
+        &copy; {{ current_year or 2025 }} Superior Tours & Travel. All rights reserved.
+    </div>
+
+</body>
+</html>

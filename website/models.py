@@ -46,13 +46,13 @@ class Inquiry(db.Model):
 class Tour(db.Model):
     __tablename__ = 'tour'
     
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=True)
     price = db.Column(db.Float, nullable=True)
     location = db.Column(db.String(100), nullable=True)
     duration = db.Column(db.String(50), nullable=True)
-    destination_id = db.Column(db.Integer, db.ForeignKey('destination.id'), nullable=False)
+    destination_id = db.Column(db.Integer, db.ForeignKey('destination.id'), nullable=True)
     image_url = db.Column(db.String(255), nullable=True)
     destination = db.relationship('Destination', backref=db.backref('tour_packages', lazy=True))
 
