@@ -439,15 +439,15 @@
 
 <body>
     <nav>
-        <a href="index.html" class="logo">Superiors<span>Adventures</span></a>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="tours.html" class="active">Tours</a></li>
-            <li><a href="destinations.html">Destinations</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
+    <a href="{{ url_for('home') }}" class="logo">Superiors<span>Adventure</span></a>
+    <ul class="nav-links">
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('tours') }}">Tours</a></li>
+        <li><a href="{{ url_for('destinations') }}">Destinations</a></li>
+        <li><a href="{{ url_for('about') }}" class="active">About</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+    </ul>
+</nav>
 
     <header class="hero">
         <h1>Discover Amazing Tours</h1>
@@ -464,7 +464,7 @@
             <p>Journey to the world's most breathtaking destinations with our expertly crafted tours</p>
         </div>
 
-        <div class="categories">
+        <!-- <div class="categories">
             <button class="category-btn active">All Tours</button>
             <button class="category-btn">Adventure</button>
             <button class="category-btn">Beach</button>
@@ -472,7 +472,7 @@
             <button class="category-btn">Wildlife</button>
             <button class="category-btn">Honeymoon</button>
             <button class="category-btn">Family</button>
-        </div>
+        </div> -->
 
         <div class="tours-grid">
             <!-- Tour Card 1 -->
@@ -497,7 +497,7 @@
                             <span>$1,299</span>
                         </div>
                     </div>
-                    <a href="#" class="btn">Book Now</a>
+                    <a href="{{ url_for('book_tour') }}" class="btn">Book Now</a>
                 </div>
             </div>
 

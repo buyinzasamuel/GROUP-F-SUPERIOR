@@ -7,6 +7,10 @@
     <title>My Bookings | Wanderlust Tours</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
     <style>
          :root {
             --primary: #4e60ff;
@@ -262,6 +266,204 @@
             background-color: var(--primary);
             color: var(--white);
         }
+        /* Modal Styles */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: var(--white);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .modal-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .payment-methods {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .payment-method {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-method:hover {
+            border-color: var(--primary);
+        }
+        
+        .payment-method.active {
+            border-color: var(--primary);
+            background-color: var(--primary-light);
+        }
+        
+        .payment-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--gray);
+        }
+        
+        .payment-method.active .payment-icon {
+            color: var(--primary);
+        }
+        
+        .payment-name {
+            font-size: 14px;
+            color: var(--dark);
+        }
+        
+        .card-element {
+            padding: 15px;
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background-color: #3a4bff;
+        }
+        
+        .calendar-container {
+            margin-bottom: 20px;
+        }
+        
+        .date-selection-summary {
+            margin-top: 10px;
+            font-size: 14px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .payment-form {
+            display: none;
+        }
+        
+        .payment-form.active {
+            display: block;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary);
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .payment-success {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .payment-success i {
+            font-size: 50px;
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+        
+        .payment-success h3 {
+            margin-bottom: 10px;
+            color: var(--success);
+        }
         
         @media (max-width: 768px) {
             .bookings-container {
@@ -271,6 +473,13 @@
                 overflow-x: auto;
                 padding-bottom: 10px;
             }
+            .payment-methods {
+                flex-direction: column;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
         }
     </style>
 </head>
@@ -278,163 +487,630 @@
 <body>
     <div class="container">
         <header>
-            <div class="logo">Superiors<span><ADdress>Adventures</ADdress></span></div>
-            <div class="user-profile">
+            <div class="logo">Superiors<span>Adventures</span></div>
+            <!-- <div class="user-profile">
                 <span>Buyinza Samuel</span>
                 <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Profile">
-            </div>
+            </div> -->
         </header>
 
         <h1 class="page-title">My Bookings</h1>
 
         <div class="filter-tabs">
-            <div class="filter-tab active">All Bookings</div>
-            <div class="filter-tab">Upcoming</div>
-            <div class="filter-tab">Completed</div>
-            <div class="filter-tab">Cancelled</div>
+    <div class="filter-tab active" data-status="all">All Bookings</div>
+    <div class="filter-tab" data-status="Completed">Completed</div>
+    <div class="filter-tab" data-status="Cancelled">Cancelled</div>
+</div>
+
+
+{% for booking in bookings %}
+<div class="booking-card"data-booking-id="{{ booking.id }}" data-status="{{ booking.status }}">
+    <img src="{{ url_for('static', filename='uploads/' ~ booking.tour.image) }}" alt="Tour Image" class="booking-image">
+    <div class="booking-details">
+        <div class="booking-header">
+            <h3 class="booking-title">Booking Reference: {{ booking.booking_reference }}</h3>
+            <span class="booking-status status-{{ booking.status | lower }}">{{ booking.status }}</span>
         </div>
-
-        <div class="bookings-container">
-            <!-- Booking Card 1 -->
-            <div class="booking-card">
-                <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Paris Tour" class="booking-image">
-                <div class="booking-details">
-                    <div class="booking-header">
-                        <h3 class="booking-title">Paris Romantic Getaway</h3>
-                        <span class="booking-status status-confirmed">Confirmed</span>
-                    </div>
-                    <div class="booking-info">
-                        <div class="info-row">
-                            <i class="fas fa-calendar-alt info-icon"></i>
-                            <span class="info-text">15 - 22 June 2023</span>
-                        </div>
-                        <div class="info-row">
-                            <i class="fas fa-users info-icon"></i>
-                            <span class="info-text">2 Adults</span>
-                        </div>
-                        <div class="info-row">
-                            <i class="fas fa-hotel info-icon"></i>
-                            <span class="info-text">Le Méridien Etoile</span>
-                        </div>
-                    </div>
-                    <div class="booking-footer">
-                        <div class="booking-price">$1,299</div>
-                        <div class="booking-actions">
-                            <button class="btn btn-outline">Details</button>
-                            <button class="btn btn-primary">Download</button>
-                        </div>
-                    </div>
-                </div>
+        <div class="booking-info">
+            <div class="info-row">
+                <i class="fas fa-user info-icon"></i>
+                <span class="info-text">Full Name: {{ booking.full_name }}</span>
             </div>
-
-            <!-- Booking Card 2 -->
-            <div class="booking-card">
-                <img src="https://images.unsplash.com/photo-1503917988258-f87a78e3c995?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Bali Tour" class="booking-image">
-                <div class="booking-details">
-                    <div class="booking-header">
-                        <h3 class="booking-title">Bali Adventure Package</h3>
-                        <span class="booking-status status-pending">Pending</span>
-                    </div>
-                    <div class="booking-info">
-                        <div class="info-row">
-                            <i class="fas fa-calendar-alt info-icon"></i>
-                            <span class="info-text">5 - 15 August 2023</span>
-                        </div>
-                        <div class="info-row">
-                            <i class="fas fa-users info-icon"></i>
-                            <span class="info-text">4 Adults</span>
-                        </div>
-                        <div class="info-row">
-                            <i class="fas fa-hotel info-icon"></i>
-                            <span class="info-text">The Kayon Resort</span>
-                        </div>
-                    </div>
-                    <div class="booking-footer">
-                        <div class="booking-price">$2,450</div>
-                        <div class="booking-actions">
-                            <button class="btn btn-outline">Details</button>
-                            <button class="btn btn-danger">Cancel</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="info-row">
+                <i class="fas fa-envelope info-icon"></i>
+                <span class="info-text">Email: {{ booking.email }}</span>
             </div>
-
-            <!-- Booking Card 3 -->
-            <div class="booking-card">
-                <img src="https://images.unsplash.com/photo-1538970272646-f61fabb3be8a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Tokyo Tour" class="booking-image">
-                <div class="booking-details">
-                    <div class="booking-header">
-                        <h3 class="booking-title">Tokyo Cultural Experience</h3>
-                        <span class="booking-status status-cancelled">Cancelled</span>
-                    </div>
-                    <div class="booking-info">
-                        <div class="info-row">
-                            <i class="fas fa-calendar-alt info-icon"></i>
-                            <span class="info-text">10 - 20 March 2023</span>
-                        </div>
-                        <div class="info-row">
-                            <i class="fas fa-users info-icon"></i>
-                            <span class="info-text">1 Adult</span>
-                        </div>
-                        <div class="info-row">
-                            <i class="fas fa-hotel info-icon"></i>
-                            <span class="info-text">Park Hotel Tokyo</span>
-                        </div>
-                    </div>
-                    <div class="booking-footer">
-                        <div class="booking-price">$1,799</div>
-                        <div class="booking-actions">
-                            <button class="btn btn-outline">Details</button>
-                            <button class="btn btn-primary">Book Again</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="info-row">
+                <i class="fas fa-phone info-icon"></i>
+                <span class="info-text">Phone: {{ booking.phone_number }}</span>
             </div>
-
-            <!-- Booking Card 4 -->
-            <div class="booking-card">
-                <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="New York Tour" class="booking-image">
-                <div class="booking-details">
-                    <div class="booking-header">
-                        <h3 class="booking-title">New York City Explorer</h3>
-                        <span class="booking-status status-confirmed">Confirmed</span>
-                    </div>
-                    <div class="booking-info">
-                        <div class="info-row">
-                            <i class="fas fa-calendar-alt info-icon"></i>
-                            <span class="info-text">1 - 8 December 2023</span>
-                        </div>
-                        <div class="info-row">
-                            <i class="fas fa-users info-icon"></i>
-                            <span class="info-text">2 Adults, 1 Child</span>
-                        </div>
-                        <div class="info-row">
-                            <i class="fas fa-hotel info-icon"></i>
-                            <span class="info-text">The Plaza Hotel</span>
-                        </div>
-                    </div>
-                    <div class="booking-footer">
-                        <div class="booking-price">$2,199</div>
-                        <div class="booking-actions">
-                            <button class="btn btn-outline">Details</button>
-                            <button class="btn btn-primary">Download</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="info-row">
+                <i class="fas fa-calendar-alt info-icon"></i>
+                <span class="info-text">Booking Date: {{ booking.booking_date.strftime('%d %b %Y %H:%M') }}</span>
             </div>
-
-            <!-- Empty State (uncomment to show when no bookings exist) -->
-            <!--
-            <div class="empty-state">
-                <div class="empty-icon">
-                    <i class="far fa-compass"></i>
-                </div>
-                <h3 class="empty-text">You don't have any bookings yet</h3>
-                <button class="btn btn-primary">Explore Tours</button>
+            <div class="info-row">
+                <i class="fas fa-map-marker-alt info-icon"></i>
+                <span class="info-text">Tour: {{ booking.tour.title }}</span>
             </div>
-            -->
+            <div class="info-row">
+                <i class="fas fa-dollar-sign info-icon"></i>
+                <span class="info-text">Price: ${{ booking.tour.price }}</span>
+            </div>
+        </div>
+        <div class="booking-footer">
+    {% if booking.status.strip().lower() not in ['completed', 'cancelled'] %}
+        <button class="btn btn-primary" onclick="openPaymentModal({{ booking.id }})">Make Payment</button>
+    {% endif %}
+
+    {% if booking.status.strip().lower() == 'pending' %}
+        <button class="btn btn-danger" onclick="cancelBooking({{ booking.id }})">Cancel Booking</button>
+    {% endif %}
+    
+    {% if booking.status.strip().lower() == 'completed' %}
+      <button class="btn btn-success"
+                    onclick="openReviewForm({{ booking.id }}, {{ booking.tour.id }}, '{{ booking.tour.title }}')">
+                Give a Review
+            </button>
+    {% endif %}
+
+
+</div>
+
+    </div>
+    </div>
+{% endfor %}
+
+<!-- One shared modal -->
+<div class="modal" id="reviewModal" style="display:none; margin-top: 15px; border:1px solid #ddd; padding:10px;">
+    <div style="background:#fff; padding:30px; border-radius:10px; max-width:500px; width:90%; box-shadow:0 5px 15px rgba(0,0,0,0.3); position:relative;">
+        <h4 id="modalTitle">Give a Review</h4>
+        <form id="reviewForm" onsubmit="submitReview(event)">
+            <label>Rating:</label><br>
+            <select name="rating" required>
+                <option value="" disabled selected>Select rating</option>
+                <option value="1">⭐</option>
+                <option value="2">⭐⭐</option>
+                <option value="3">⭐⭐⭐</option>
+                <option value="4">⭐⭐⭐⭐</option>
+                <option value="5">⭐⭐⭐⭐⭐</option>
+            </select><br><br>
+
+            <label>Comment:</label><br>
+            <textarea name="comment" rows="3" placeholder="Write your review..."></textarea><br><br>
+
+            <input type="hidden" name="bookingId">
+            <input type="hidden" name="tourId">
+
+            <button type="submit" class="btn btn-primary">Submit Review</button>
+            <button type="button" class="btn btn-link" onclick="closeReviewForm()">Cancel</button>
+        </form>
+    </div>    
+</div>
+
+
+    
+</div>
+
+
+    </div>
+
+    <!-- Booking Details Modal -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('bookingModal')">&times;</span>
+            <h3 class="modal-title">Booking Details</h3>
+            <div id="bookingDetailsContent">
+                <!-- Content will be loaded dynamically -->
+            </div>
         </div>
     </div>
+
+    <!-- Payment Modal -->
+    <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('paymentModal')">&times;</span>
+            <h3 class="modal-title">Complete Your Booking</h3>
+
+            <div id="paymentFormContent">
+                <div class="form-group">
+                    <label class="form-label">Select Dates</label>
+                    <div class="calendar-container">
+                        <input type="text" id="bookingDates" class="form-control" placeholder="Select dates">
+                        <div id="dateSummary" class="date-selection-summary"></div>
+                    </div>
+                </div>
+
+                <!-- <div class="form-group">
+                    <label class="form-label">Travelers</label>
+                    <select id="travelersSelect" class="form-control">
+                        <option value="1">1 Adult</option>
+                        <option value="2">2 Adults</option>
+                        <option value="3">2 Adults, 1 Child</option>
+                        <option value="4">2 Adults, 2 Children</option>
+                        <option value="5">Family (2 Adults, 3 Children)</option>
+                    </select>
+                </div> -->
+
+                <div class="form-group">
+                    <label class="form-label">Payment Method</label>
+                    <div class="payment-methods">
+                        <div class="payment-method active" onclick="selectPaymentMethod(this, 'credit')">
+                            <i class="far fa-credit-card payment-icon"></i>
+                            <div class="payment-name">Credit Card</div>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod(this, 'paypal')">
+                            <i class="fab fa-cc-paypal payment-icon"></i>
+                            <div class="payment-name">PayPal</div>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod(this, 'bank')">
+                            <i class="fas fa-university payment-icon"></i>
+                            <div class="payment-name">Bank Transfer</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Credit Card Form -->
+                <div id="creditCardForm" class="payment-form active">
+                    <div class="form-group">
+                        <label class="form-label">Card Number</label>
+                        <input type="text" id="cardNumber" class="form-control" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCardNumber(this)">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Cardholder Name</label>
+                        <input type="text" id="cardName" class="form-control" placeholder="John Doe">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Expiry Date</label>
+                            <input type="text" id="cardExpiry" class="form-control" placeholder="MM/YY" maxlength="5" oninput="formatExpiryDate(this)">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">CVV</label>
+                            <input type="text" id="cardCvv" class="form-control" placeholder="123" maxlength="4">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PayPal Form (hidden by default) -->
+                <div id="paypalForm" class="payment-form">
+                    <div class="form-group">
+                        <label class="form-label">PayPal Email</label>
+                        <input type="email" id="paypalEmail" class="form-control" placeholder="your@email.com">
+                    </div>
+                    <p style="font-size: 13px; color: var(--gray); margin-bottom: 15px;">
+                        You will be redirected to PayPal to complete your payment securely.
+                    </p>
+                </div>
+
+                <!-- Bank Transfer Form (hidden by default) -->
+                <div id="bankForm" class="payment-form">
+                    <div class="form-group">
+                        <label class="form-label">Account Holder Name</label>
+                        <input type="text" id="accountName" class="form-control" placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Bank Name</label>
+                        <input type="text" id="bankName" class="form-control" placeholder="Your Bank Name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Account Number</label>
+                        <input type="text" id="accountNumber" class="form-control" placeholder="1234567890">
+                    </div>
+                    <p style="font-size: 13px; color: var(--gray); margin-bottom: 15px;">
+                        Please complete your payment within 24 hours to secure your booking.
+                    </p>
+                </div>
+
+                <div class="loading-spinner" id="paymentSpinner">
+                    <div class="spinner"></div>
+                    <p>Processing your payment...</p>
+                </div>
+
+                <button class="submit-btn" onclick="processPayment()">Confirm Payment</button>
+            </div>
+
+            <div class="payment-success" id="paymentSuccess">
+                <i class="fas fa-check-circle"></i>
+                <h3>Payment Successful!</h3>
+                <p>Your booking has been confirmed. A receipt has been sent to your email.</p>
+                <button class="btn btn-primary" style="margin-top: 20px;" onclick="closeModal('paymentModal')">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        // Global variables
+        let selectedDates = [];
+        let currentBookingId = null;
+        let selectedPaymentMethod = 'credit';
+
+        // Initialize date picker
+        const datePicker = flatpickr("#bookingDates", {
+            mode: "range",
+            minDate: "today",
+            dateFormat: "Y-m-d",
+            onChange: function(selectedDates, dateStr, instance) {
+                updateSelectedDates(selectedDates);
+            }
+        });
+
+
+function openReviewForm(bookingId, tourId, tourTitle) {
+    const modal = document.getElementById("reviewModal");
+    const form = document.getElementById("reviewForm");
+    const title = document.getElementById("modalTitle");
+
+    form.bookingId.value = bookingId;
+    form.tourId.value = tourId;
+    title.innerText = `Give a Review for ${tourTitle}`;
+
+    modal.style.display = "block";
+}
+
+function closeReviewForm() {
+    document.getElementById("reviewModal").style.display = "none";
+}
+
+function submitReview(event) {
+    event.preventDefault();
+
+    const form = event.target;
+    const rating = form.rating.value;
+    const comment = form.comment.value;
+    const bookingId = form.bookingId.value;
+    const tourId = form.tourId.value;
+
+    console.log("Submitting review:", { bookingId, tourId, rating, comment });
+
+    // Example POST request (replace with real AJAX/fetch if needed)
+    // fetch('/submit-review', {
+    //     method: 'POST',
+    //     headers: {'Content-Type': 'application/json'},
+    //     body: JSON.stringify({ bookingId, tourId, rating, comment })
+    // }).then(response => {
+    //     // handle success
+    //     closeReviewForm();
+    // });
+
+    alert("Review submitted!");
+    closeReviewForm();
+}
+
+
+        // Update selected dates display
+        function updateSelectedDates(dates) {
+            selectedDates = dates;
+            const summaryElement = document.getElementById('dateSummary');
+
+            if (dates.length === 2) {
+                const startDate = formatDisplayDate(dates[0]);
+                const endDate = formatDisplayDate(dates[1]);
+                const nights = calculateNights(dates[0], dates[1]);
+
+                summaryElement.innerHTML = `
+                    Selected: ${startDate} to ${endDate}<br>
+                    ${nights} ${nights === 1 ? 'night' : 'nights'}
+                `;
+            } else {
+                summaryElement.textContent = '';
+            }
+        }
+
+        // Format date for display
+        function formatDisplayDate(date) {
+            return date.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+            });
+        }
+
+        // Calculate number of nights between two dates
+        function calculateNights(startDate, endDate) {
+            const diffTime = endDate - startDate;
+            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "flex";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+            // Reset payment modal if closing it
+            if (modalId === 'paymentModal') {
+                resetPaymentModal();
+            }
+        }
+
+        // Reset payment modal to initial state
+        function resetPaymentModal() {
+            datePicker.clear();
+            document.getElementById('dateSummary').textContent = '';
+            document.getElementById('travelersSelect').value = '1';
+            selectPaymentMethod(document.querySelector('.payment-method'), 'credit');
+            document.getElementById('paymentFormContent').style.display = 'block';
+            document.getElementById('paymentSuccess').style.display = 'none';
+            document.getElementById('paymentSpinner').style.display = 'none';
+            clearFormFields();
+        }
+
+        // Clear all form fields
+        function clearFormFields() {
+            document.getElementById('cardNumber').value = '';
+            document.getElementById('cardName').value = '';
+            document.getElementById('cardExpiry').value = '';
+            document.getElementById('cardCvv').value = '';
+            document.getElementById('paypalEmail').value = '';
+            document.getElementById('accountName').value = '';
+            document.getElementById('bankName').value = '';
+            document.getElementById('accountNumber').value = '';
+        }
+
+        function openBookingDetails(bookingId) {
+            // In a real app, you would fetch this data from your backend
+            const bookingData = {
+                1: {
+                    title: "Paris Romantic Getaway",
+                    image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                    dates: "15 - 22 June 2023",
+                    travelers: "2 Adults",
+                    hotel: "Le Méridien Etoile",
+                    price: "$1,299",
+                    status: "Confirmed",
+                    description: "Experience the romance of Paris with this 7-night package including flights, luxury hotel accommodation, and a private guided tour of the city's most romantic spots."
+                },
+                2: {
+                    title: "Bali Adventure Package",
+                    image: "https://images.unsplash.com/photo-1503917988258-f87a78e3c995?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                    dates: "5 - 15 August 2023",
+                    travelers: "4 Adults",
+                    hotel: "The Kayon Resort",
+                    price: "$2,450",
+                    status: "Pending",
+                    description: "10-day adventure in Bali featuring jungle trekking, white water rafting, snorkeling, and cultural experiences. Includes all activities and luxury resort accommodation."
+                },
+                3: {
+                    title: "Tokyo Cultural Experience",
+                    image: "https://images.unsplash.com/photo-1538970272646-f61fabb3be8a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                    dates: "10 - 20 March 2023",
+                    travelers: "1 Adult",
+                    hotel: "Park Hotel Tokyo",
+                    price: "$1,799",
+                    status: "Cancelled",
+                    description: "Immerse yourself in Japanese culture with this 10-day tour including tea ceremonies, sumo wrestling matches, traditional ryokan stays, and guided tours of Tokyo's historic districts."
+                },
+                4: {
+                    title: "New York City Explorer",
+                    image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                    dates: "1 - 8 December 2023",
+                    travelers: "2 Adults, 1 Child",
+                    hotel: "The Plaza Hotel",
+                    price: "$2,199",
+                    status: "Confirmed",
+                    description: "7-night family-friendly New York City experience including Broadway show tickets, museum passes, a harbor cruise, and luxury accommodation at the iconic Plaza Hotel."
+                }
+            };
+
+            const booking = bookingData[bookingId];
+            const content = `
+                <div style="margin-bottom: 20px;">
+                    <img src="${booking.image}" alt="${booking.title}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
+                    <h3 style="margin-bottom: 10px;">${booking.title}</h3>
+                    <p style="color: var(--gray); margin-bottom: 15px;">${booking.description}</p>
+                    
+                    <div style="background-color: var(--primary-light); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span style="font-weight: 500;">Status:</span>
+                            <span class="booking-status status-${booking.status.toLowerCase()}">${booking.status}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span style="font-weight: 500;">Dates:</span>
+                            <span>${booking.dates}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span style="font-weight: 500;">Travelers:</span>
+                            <span>${booking.travelers}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="font-weight: 500;">Accommodation:</span>
+                            <span>${booking.hotel}</span>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+                        <span style="font-size: 18px; font-weight: 700;">Total Price:</span>
+                        <span style="font-size: 22px; font-weight: 700; color: var(--primary);">${booking.price}</span>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('bookingDetailsContent').innerHTML = content;
+            openModal('bookingModal');
+        }
+
+        function openPaymentModal(bookingId) {
+            currentBookingId = bookingId;
+            openModal('paymentModal');
+        }
+
+        function selectPaymentMethod(element, method) {
+            // Remove active class from all payment methods
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            // Add active class to selected method
+            element.classList.add('active');
+            selectedPaymentMethod = method;
+
+            // Hide all payment forms
+            document.querySelectorAll('.payment-form').forEach(form => {
+                form.classList.remove('active');
+            });
+
+            // Show the selected payment form
+            document.getElementById(`${method}Form`).classList.add('active');
+
+        }
+
+        // Format card number with spaces
+        function formatCardNumber(input) {
+            // Remove all non-digit characters
+            let value = input.value.replace(/\D/g, '');
+
+            // Add space after every 4 digits
+            value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+
+            // Update the input value
+            input.value = value;
+        }
+
+        // Format expiry date as MM/YY
+        function formatExpiryDate(input) {
+            let value = input.value.replace(/\D/g, '');
+
+            if (value.length > 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+
+            input.value = value;
+        }
+
+        function validatePaymentForm() {
+            if (selectedDates.length !== 2) {
+                alert("Please select your travel dates");
+                return false;
+            }
+
+            if (selectedPaymentMethod === 'credit') {
+                const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+                const cardName = document.getElementById('cardName').value.trim();
+                const cardExpiry = document.getElementById('cardExpiry').value;
+                const cardCvv = document.getElementById('cardCvv').value;
+
+                if (!cardNumber || cardNumber.length < 16) {
+                    alert("Please enter a valid card number");
+                    return false;
+                }
+
+                if (!cardName) {
+                    alert("Please enter the cardholder name");
+                    return false;
+                }
+
+                if (!cardExpiry || cardExpiry.length < 5) {
+                    alert("Please enter a valid expiry date (MM/YY)");
+                    return false;
+                }
+
+                if (!cardCvv || cardCvv.length < 3) {
+                    alert("Please enter a valid CVV");
+                    return false;
+                }
+            } else if (selectedPaymentMethod === 'paypal') {
+                const email = document.getElementById('paypalEmail').value.trim();
+                if (!email || !email.includes('@')) {
+                    alert("Please enter a valid PayPal email");
+                    return false;
+                }
+            } else if (selectedPaymentMethod === 'bank') {
+                const accountName = document.getElementById('accountName').value.trim();
+                const bankName = document.getElementById('bankName').value.trim();
+                const accountNumber = document.getElementById('accountNumber').value.trim();
+
+                if (!accountName) {
+                    alert("Please enter the account holder name");
+                    return false;
+                }
+
+                if (!bankName) {
+                    alert("Please enter the bank name");
+                    return false;
+                }
+
+                if (!accountNumber) {
+                    alert("Please enter the account number");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+  // ✅ close processPayment()
+
+        function cancelBooking(bookingId) {
+    if (confirm("Are you sure you want to cancel this booking?")) {
+        fetch(`/cancel_booking/${bookingId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(res => {
+            if (res.ok) {
+                alert(`Booking #${bookingId} has been cancelled.`);
+                location.reload(); // or update the UI dynamically
+            } else {
+                alert('Failed to cancel the booking.');
+            }
+        })
+        .catch(() => {
+            alert('Network error.');
+        });
+    }
+}
+
+
+        // Filter tabs functionality
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                // In a real app, you would filter the bookings here
+                filterBookings(this.textContent.trim());
+            });
+        });
+
+        function filterBookings(filter) {
+            console.log(`Filtering bookings by: ${filter}`);
+
+            // In a real app, you would filter the bookings based on the selected filter
+            // This is just a placeholder for the functionality
+        }    const tabs = document.querySelectorAll('.filter-tab');
+    const bookings = document.querySelectorAll('.booking-card');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Remove 'active' class from all tabs
+            tabs.forEach(t => t.classList.remove('active'));
+            // Add 'active' to clicked tab
+            tab.classList.add('active');
+
+            const status = tab.getAttribute('data-status');
+
+            bookings.forEach(card => {
+                const cardStatus = card.getAttribute('data-status');
+                
+                if (status === 'all' || cardStatus === status) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+
+
+
+
+
+    </script>
 </body>
 
 </html>

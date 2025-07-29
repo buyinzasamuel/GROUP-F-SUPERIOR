@@ -1,34 +1,51 @@
-from flask import Flask #type: ignore
-from flask_sqlalchemy import SQLAlchemy  # type: ignore
-from flask_migrate import Migrate  # type: ignore
-from flask_login import LoginManager  # type: ignore
-from config import Config  # type: ignore
-import psycopg2  # type: ignore
+from flask import Flask#type: ignore
+from flask_sqlalchemy import SQLAlchemy#type: ignore
+from flask_migrate import Migrate#type: ignore
+from flask_login import LoginManager#type: ignore
+from config import Config
+from flask_mail import Mail#type: ignore
+import psycopg2 #type: ignore
+import traceback #type: ignore
+import os
 
-#Initialize Flask application
-app = Flask(__name__)
-app.config.from_object(Config) #Load configuration from Config class
+app = Flask(__name__, static_folder='static')
+app.config.from_object(Config)
 
-#Initialize SQLAlchemy for database operations
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # or your SMTP server
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'andimashimwerhoda@gmail.com'
+app.config['MAIL_PASSWORD'] = 'pdjm kbxb yrrw vzue' # Or use environment variables!
+app.config['MAIL_DEFAULT_SENDER'] = 'andimashimwerhoda@gmail.com'
+
+
 db = SQLAlchemy(app)
-
-conn = psycopg2.connect(
-    database=app.config['DATABASE']['database'],
-    user=app.config['DATABASE']['user'],
-    password=app.config['DATABASE']['password'],
-    host=app.config['DATABASE']['host'],
-    port=app.config['DATABASE']['port']
-)
-
-# Example of accessing the DATABASE configuration
-database = app.config['DATABASE']['database']
-#Initialize Flask-Migrate for database migrations
+mail = Mail(app)
 migrate = Migrate(app, db)
 
-#Initialize Flask-Login for user session management
-login_manager = LoginManager(app)
-login_manager.login_view = 'login'  #Set the login view endpoint and redirect to login page if not authenticated
 
-#Import routes after initializing app, db, migrate, and login_manager to avoid circular imports
-from routes import *  # type: ignore
+
+
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+
 from models import Booking, User, TourPackage, Review, Inquiry
+
+# FIX: Register the user_loader
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    traceback.print_exc()
+    return f"An error occurred: {str(e)}", 500
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+from routes import *
+
+

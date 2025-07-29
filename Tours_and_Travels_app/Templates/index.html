@@ -353,37 +353,39 @@
 </head>
 
 <body>
-    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: rgba(0, 0, 0, 0.3); backdrop-filter: blur(5px);">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="#" style="font-family: 'Playfair Display', serif; font-size: 1.8rem;">SUPERIORS </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="tours.html">Tours</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="destinations.html">Destinations</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact Us</a>
-                    </li>
-                </ul>
-                <div class="ms-lg-3 mt-3 mt-lg-0">
-                    <a href="#" class="btn btn-outline-light">Book Now</a>
-                </div>
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#" style="font-family: 'Playfair Display', serif; font-size: 1.8rem;">SUPERIORS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('home') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('about') }}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('tours') }}">Tours</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('destinations') }}">Destinations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('contact') }}">Contact Us</a>
+                </li>
+            </ul>
+            <div class="ms-lg-3 mt-3 mt-lg-0 d-flex gap-2">
+                <a href="{{ url_for('login') }}" class="btn btn-outline-light">Login</a>
+                <a href="{{ url_for('register') }}" class="btn btn-light text-dark">Register</a>
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
+
+
 
     <!-- Hero Section -->
     <section class="hero-section">
@@ -392,12 +394,12 @@
                 <h1 class="hero-title">Discover Your Perfect Adventures with Superiors Tour and Travels</h1>
                 <p class="hero-subtitle">Explore the world's most breathtaking destinations with our expertly crafted tours and travel experiences.</p>
                 <div class="d-flex gap-3">
-                    <a href="#" class="btn btn-primary">Explore Tours</a>
-                    <a href="#" class="btn btn-outline-light">Learn More</a>
+                    <a href="{{ url_for('tours')}}" class="btn btn-primary">Explore Tours</a>
+                    <!-- <a href="#" class="btn btn-outline-light">Learn More</a> -->
                 </div>
             </div>
 
-            <div class="search-form">
+            <!-- <div class="search-form">
                 <h4 class="mb-4">Find Your Dream Destination</h4>
                 <form class="row g-3">
                     <div class="col-md-6">
@@ -416,7 +418,7 @@
                         <button type="submit" class="btn search-btn w-100">Search <i class="fas fa-search ms-2"></i></button>
                     </div>
                 </form>
-            </div>
+            </div> -->
         </div>
     </section>
 
@@ -464,7 +466,7 @@
             </div>
 
             <div class="text-center mt-4">
-                <a href="#" class="btn btn-primary">View All Destinations <i class="fas fa-arrow-right ms-2"></i></a>
+                <a href="{{ url_for('destinations')}}" class="btn btn-primary">View All Destinations <i class="fas fa-arrow-right ms-2"></i></a>
             </div>
         </div>
     </section>

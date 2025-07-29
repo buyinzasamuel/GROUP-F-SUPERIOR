@@ -17,7 +17,7 @@ class Config:
     DATABASE = {
            'database': 'flask_db',
            'user': 'postgres',
-           'password': 'yourpassword',
+           'password': 'DENNISE',
            'host': 'localhost',
            'port': '5432'
     }

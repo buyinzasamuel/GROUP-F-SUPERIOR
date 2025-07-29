@@ -245,6 +245,7 @@
         </div>
 
         <form class="login-form" id="loginForm" method="POST">
+            {{ form.hidden_tag() }}
             <div class="form-group" id="emailGroup">
                 <label for="email">Email Address</label>
                 <input type="email" id="email" name="email" placeholder="you@example.com" required>
@@ -279,7 +280,7 @@
         </form>
 
         <div class="register-link">
-            Don't have an account? <a href="{{ url_for('main.register') }}">Register here</a>
+            Don't have an account? <a href="{{ url_for('register') }}">Register here</a>
         </div>
     </div>
 
@@ -294,41 +295,42 @@
         });
 
         form.addEventListener('submit', function(e) {
-            e.preventDefault();
+    e.preventDefault();
 
-            const formData = new FormData(form);
-            const spinner = document.getElementById('spinner');
-            const buttonText = document.getElementById('buttonText');
-            const errorMessage = document.getElementById('errorMessage');
+    const formData = new FormData(form);
+    const spinner = document.getElementById('spinner');
+    const buttonText = document.getElementById('buttonText');
+    const errorMessage = document.getElementById('errorMessage');
 
-            spinner.style.display = 'inline-block';
-            buttonText.textContent = 'Logging in...';
-            errorMessage.style.display = 'none';
+    spinner.style.display = 'inline-block';
+    buttonText.textContent = 'Logging in...';
+    errorMessage.style.display = 'none';
 
-            fetch('/login', {
-                    method: 'POST',
-                    body: formData,
-                })
-                .then(res => res.json())
-                .then(data => {
-                    spinner.style.display = 'none';
-                    buttonText.textContent = 'Login';
+    fetch(window.location.pathname + window.location.search, {
+            method: 'POST',
+            body: formData,
+        })
+        .then(res => res.json())
+        .then(data => {
+            spinner.style.display = 'none';
+            buttonText.textContent = 'Login';
 
-                    if (data.success) {
-                        window.location.href = data.redirect_url;
-                    } else {
-                        errorMessage.textContent = data.message || 'Login failed.';
-                        errorMessage.style.display = 'block';
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    errorMessage.textContent = 'Server error. Please try again later.';
-                    errorMessage.style.display = 'block';
-                    spinner.style.display = 'none';
-                    buttonText.textContent = 'Login';
-                });
+            if (data.success) {
+                window.location.href = data.redirect_url;
+            } else {
+                errorMessage.textContent = data.message || 'Login failed.';
+                errorMessage.style.display = 'block';
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            errorMessage.textContent = 'Server error. Please try again later.';
+            errorMessage.style.display = 'block';
+            spinner.style.display = 'none';
+            buttonText.textContent = 'Login';
         });
+});
+
     </script>
 </body>
 

@@ -1,17 +1,22 @@
 from flask_wtf import FlaskForm # type: ignore
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField, FloatField, IntegerField # type: ignore
-from wtforms.validators import DataRequired, Email, EqualTo # type: ignore
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, FloatField, IntegerField, FileField, SelectField, BooleanField # type: ignore
+from wtforms.validators import DataRequired, Email, EqualTo, Length, NumberRange, URL, Optional # type: ignore
 from wtforms import DecimalField # type: ignore
+from wtforms.fields import EmailField# type: ignore
+from flask_wtf.file import FileAllowed# type: ignore
+
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    email = EmailField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    phone_number = StringField('Phone Number')
+    image = FileField('Profile Image', validators=[FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')])
     submit = SubmitField('Register')
 
 class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    email = EmailField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
 
@@ -44,4 +49,34 @@ class InquiryForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     message = TextAreaField('Message', validators=[DataRequired()])
-    submit = SubmitField('Send Inquiry')    
+    submit = SubmitField('Send Inquiry')  
+    
+    
+class TourForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    description = StringField('Description', validators=[DataRequired()])
+    price = DecimalField('Price', validators=[DataRequired()])
+    duration = StringField('Duration', validators=[DataRequired()])
+    destination = StringField('Destination', validators=[DataRequired()])
+    image = FileField('Image', validators=[DataRequired(), FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')])
+    submit = SubmitField('Create Tour') 
+    
+    
+class DestinationForm(FlaskForm):
+    name = StringField('Destination Name', validators=[DataRequired(), Length(min=2, max=100)])
+    description = TextAreaField('Description', validators=[Length(max=500)])
+    country = StringField('Country', validators=[DataRequired(), Length(min=2, max=100)])
+    image = FileField('Image', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'gif'], 'Images only!')])
+    submit = SubmitField('Save Destination')
+    
+class EditUserForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    phone_number = StringField('Phone Number', validators=[Optional()])
+    password = PasswordField('New Password', validators=[Optional()])
+    is_admin = BooleanField('Is Admin')
+    image = FileField('Profile Image')
+    
+    
+class DummyForm(FlaskForm):
+    pass

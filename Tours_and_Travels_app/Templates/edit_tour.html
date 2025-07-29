@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <title>Login page</title>
+    <style>
+         :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #4fc2f7;
+            --error-color: #d32f2f;
+            --light-gray: #f5f7fa;
+            --dark-gray: #333;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-gray);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);
+        }
+        
+        .login-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 420px;
+            padding: 2.5rem;
+            transition: var(--transition);
+            overflow: hidden;
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo-container {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .logo {
+            max-width: 50px;
+            max-height: 50px;
+        }
+        
+        h1 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .login-form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--dark-gray);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(79, 194, 247, 0.2);
+        }
+        
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+        
+        .error input {
+            border-color: var(--error-color);
+        }
+        
+        .password-wrapper {
+            position: relative;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+        
+        .remember-me input {
+            width: auto;
+            margin-right: 0.5rem;
+        }
+        
+        .forgot-password a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .forgot-password a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+        
+        .login-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .login-button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .register-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .register-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .register-link a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 1.5rem;
+                margin: 0 1rem;
+            }
+            .options {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .forgot-password {
+                margin-top: 0.5rem;
+            }
+        }
+        /* Loading animation */
+        
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="logo-container">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8b970c12-d4aa-4a1b-86e7-f0377a984dc5.png" alt="Company logo" class="logo">
+            </div>
+            <h1>Edit Tour Package</h1>
+            <p class="subtitle">Please fill in the form below to edit tour</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('edit_tour', tour_id=tour.id) }}" enctype="multipart/form-data" id="tourForm">
+        {{ form.hidden_tag() }}
+            <div class="form-group">
+                <label for="title">Title</label>
+                {{ form.title(size=32, id="title", placeholder="e.g. Safari Adventure") }}
+                <div class="error-message" id="titleError">Title is required</div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                {{ form.description(size=64, id="description", placeholder="Short description of the tour") }}
+                <div class="error-message" id="descriptionError">Description is required</div>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price ($)</label>
+                {{ form.price(id="price", placeholder="e.g. 250") }}
+                <div class="error-message" id="priceError">Price must be a number</div>
+            </div>
+
+            <div class="form-group">
+                <label for="duration">Duration</label>
+                {{ form.duration(id="duration", placeholder="e.g. 3 days") }}
+                <div class="error-message" id="durationError">Duration is required</div>
+            </div>
+
+            <div class="form-group">
+                <label for="destination">Destination</label>
+                {{ form.destination(id="destination", placeholder="e.g. Murchison Falls") }}
+                <div class="error-message" id="destinationError">Destination is required</div>
+            </div>
+            <div class="form-group">
+                <label for="image">Image</label>
+                {{ form.image(id="image") }}
+                <div class="error-message" id="imageError">Image is required</div>
+            </div>
+            <div id="errorMessage" style="color: red; font-size: 0.9rem; margin-bottom: 1rem;"></div>
+
+            <button type="submit" class="login-button" id="submitTour">
+                <span id="buttonText">Edit Tour</span>
+                <span class="spinner" id="spinner" style="display:none;"></span>
+            </button>
+        </form>
+
+        <div class="register-link">
+            <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <script>
+    const tourForm = document.getElementById('tourForm');
+
+    tourForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(tourForm);
+        const spinner = document.getElementById('spinner');
+        const buttonText = document.getElementById('buttonText');
+        const errorMessage = document.getElementById('errorMessage');
+
+        spinner.style.display = 'inline-block';
+        buttonText.textContent = 'Submitting...';
+        errorMessage.style.display = 'none';
+
+        fetch(tourForm.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest' 
+            }
+        })
+        .then(res => {
+            const contentType = res.headers.get("content-type");
+            if (!res.ok) {
+                return res.text().then(text => {
+                    throw new Error(text);
+                });
+            }
+            if (contentType && contentType.includes("application/json")) {
+                return res.json();
+            } else {
+                throw new Error("Expected JSON but got something else");
+            }
+        })
+        .then(data => {
+            spinner.style.display = 'none';
+            buttonText.textContent = 'Create Tour';
+
+            if (data.success) {
+                window.location.href = data.redirect_url;
+            } else {
+                errorMessage.textContent = data.message || 'Tour creation failed.';
+                errorMessage.style.display = 'block';
+            }
+        })
+        .catch(err => {
+            console.error('Caught error:', err.message);
+            errorMessage.textContent = 'Server error. Please check your form or try again later.';
+            errorMessage.style.display = 'block';
+            spinner.style.display = 'none';
+            buttonText.textContent = 'Create Tour';
+        });
+    });
+</script>
+
+</body>

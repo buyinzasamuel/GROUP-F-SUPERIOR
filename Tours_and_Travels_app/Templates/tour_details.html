@@ -524,12 +524,13 @@
             <nav class="navbar">
                 <a href="index.html" class="logo">Superior <span>Adventures</span></a>
                 <div class="nav-links">
-                    <a href="index.html">Home</a>
-                    <a href="tours.html">Tours</a>
-                    <a href="destinations.html">Destinations</a>
-                    <a href="about.html">About</a>
-                    <a href="contact.html">Contact</a>
-                </div>
+    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('tours') }}">Tours</a>
+    <a href="{{ url_for('destinations') }}">Destinations</a>
+    <a href="{{ url_for('about') }}">About</a>
+    <a href="{{ url_for('contact') }}">Contact</a>
+</div>
+
                 <a href="#" class="book-now-btn">Book Now</a>
             </nav>
         </div>

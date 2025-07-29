@@ -434,19 +434,56 @@
                 padding: 1rem;
             }
         }
+
+        .booking-form-overlay {
+  position: fixed;       /* Stay in place */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* semi-transparent dark backdrop */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;         /* on top of everything */
+}
+
+.booking-form-card {
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  max-width: 400px;
+  width: 90%;
+  position: relative;
+}
+
+/* Optional: Close button in top-right corner */
+.booking-form-card .close-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #555;
+  border: none;
+  background: none;
+}
+
+
     </style>
 </head>
 
 <body>
     <nav>
         <a href="index.html" class="logo">Superiors<span>Adventures</span></a>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="tours.html" class="active">Tours</a></li>
-            <li><a href="destinations.html">Destinations</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
+       <ul class="nav-links">
+    <li><a href="{{ url_for('home') }}">Home</a></li>
+    <li><a href="{{ url_for('tours') }}" class="active">Tours</a></li>
+    <li><a href="{{ url_for('destinations') }}">Destinations</a></li>
+    <li><a href="{{ url_for('about') }}">About</a></li>
+    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+</ul>
     </nav>
 
     <header class="hero">
@@ -464,7 +501,7 @@
             <p>Journey to the world's most breathtaking destinations with our expertly crafted tours</p>
         </div>
 
-        <div class="categories">
+        <!-- <div class="categories">
             <button class="category-btn active">All Tours</button>
             <button class="category-btn">Adventure</button>
             <button class="category-btn">Beach</button>
@@ -472,191 +509,78 @@
             <button class="category-btn">Wildlife</button>
             <button class="category-btn">Honeymoon</button>
             <button class="category-btn">Family</button>
+        </div> -->
+
+<div class="tours-grid">
+    {% for tour in tours %}
+    <div class="tour-card">
+        <div class="tour-img">
+            {% if tour.image %}
+                <img src="{{ url_for('static', filename='uploads/' + tour.image) }}" alt="{{ tour.title }}">
+            {% else %}
+                <img src="{{ url_for('static', filename='default-image.png') }}" alt="No image available">
+            {% endif %}
         </div>
-
-        <div class="tours-grid">
-            <!-- Tour Card 1 -->
-            <div class="tour-card">
-                <div class="tour-img">
-                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Bali Adventure">
-                </div>
-                <div class="tour-info">
-                    <h3>Bali Cultural Experience</h3>
-                    <div class="tour-location">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Bali, Indonesia</span>
-                    </div>
-                    <p class="tour-desc">Immerse yourself in Bali's rich culture with temple visits, traditional dance performances, and authentic cooking classes.</p>
-                    <div class="tour-meta">
-                        <div class="tour-duration">
-                            <i class="far fa-calendar-alt"></i>
-                            <span>7 Days</span>
-                        </div>
-                        <div class="tour-price">
-                            <i class="fas fa-tag"></i>
-                            <span>$1,299</span>
-                        </div>
-                    </div>
-                    <a href="#" class="btn">Book Now</a>
-                </div>
+        <div class="tour-info">
+            <h3>{{ tour.title }}</h3>
+            <div class="tour-location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>{{ tour.destination }}</span>
             </div>
-
-            <!-- Tour Card 2 -->
-            <div class="tour-card">
-                <div class="tour-img">
-                    <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80" alt="Safari Adventure">
+            <p class="tour-desc">{{ tour.description }}</p>
+            <div class="tour-meta">
+                <div class="tour-duration">
+                    <i class="far fa-calendar-alt"></i>
+                    <span>{{ tour.duration }}</span>
                 </div>
-                <div class="tour-info">
-                    <h3>African Safari Adventure</h3>
-                    <div class="tour-location">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Serengeti, Tanzania</span>
-                    </div>
-                    <p class="tour-desc">Witness the Great Migration and spot the Big Five on this unforgettable safari experience in the heart of Africa.</p>
-                    <div class="tour-meta">
-                        <div class="tour-duration">
-                            <i class="far fa-calendar-alt"></i>
-                            <span>10 Days</span>
-                        </div>
-                        <div class="tour-price">
-                            <i class="fas fa-tag"></i>
-                            <span>$3,499</span>
-                        </div>
-                    </div>
-                    <a href="#" class="btn">Book Now</a>
+                <div class="tour-price">
+                    <i class="fas fa-tag"></i>
+                    <span>${{ tour.price }}</span>
                 </div>
+                
             </div>
-
-            <!-- Tour Card 3 -->
-            <div class="tour-card">
-                <div class="tour-img">
-                    <img src="https://images.unsplash.com/photo-1503917988258-f87a78e3c995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1587&q=80" alt="European Explorer">
-                </div>
-                <div class="tour-info">
-                    <h3>European Explorer</h3>
-                    <div class="tour-location">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Multiple Countries</span>
-                    </div>
-                    <p class="tour-desc">Discover the best of Europe with this multi-country tour covering Paris, Rome, Amsterdam, and Barcelona.</p>
-                    <div class="tour-meta">
-                        <div class="tour-duration">
-                            <i class="far fa-calendar-alt"></i>
-                            <span>14 Days</span>
-                        </div>
-                        <div class="tour-price">
-                            <i class="fas fa-tag"></i>
-                            <span>$2,799</span>
-                        </div>
-                    </div>
-                    <a href="#" class="btn">Book Now</a>
-                </div>
-            </div>
-
-            <!-- Tour Card 4 -->
-            <div class="tour-card">
-                <div class="tour-img">
-                    <img src="https://images.unsplash.com/photo-1518391846015-55a9cc003b25?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Japanese Culture">
-                </div>
-                <div class="tour-info">
-                    <h3>Japanese Cultural Journey</h3>
-                    <div class="tour-location">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Kyoto, Japan</span>
-                    </div>
-                    <p class="tour-desc">Experience traditional Japan with tea ceremonies, samurai history, and stays in authentic ryokan inns.</p>
-                    <div class="tour-meta">
-                        <div class="tour-duration">
-                            <i class="far fa-calendar-alt"></i>
-                            <span>9 Days</span>
-                        </div>
-                        <div class="tour-price">
-                            <i class="fas fa-tag"></i>
-                            <span>$2,199</span>
-                        </div>
-                    </div>
-                    <a href="#" class="btn">Book Now</a>
-                </div>
-            </div>
-
-            <!-- Tour Card 5 -->
-            <div class="tour-card">
-                <div class="tour-img">
-                    <img src="https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Maldives Resort">
-                </div>
-                <div class="tour-info">
-                    <h3>Maldives Paradise Retreat</h3>
-                    <div class="tour-location">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Maldives</span>
-                    </div>
-                    <p class="tour-desc">Relax in luxury overwater bungalows with private pools, coral reef snorkeling, and sunset cruises.</p>
-                    <div class="tour-meta">
-                        <div class="tour-duration">
-                            <i class="far fa-calendar-alt"></i>
-                            <span>6 Days</span>
-                        </div>
-                        <div class="tour-price">
-                            <i class="fas fa-tag"></i>
-                            <span>$3,899</span>
-                        </div>
-                    </div>
-                    <a href="#" class="btn">Book Now</a>
-                </div>
-            </div>
-
-            <!-- Tour Card 6 -->
-            <div class="tour-card">
-                <div class="tour-img">
-                    <img src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Rocky Mountains">
-                </div>
-                <div class="tour-info">
-                    <h3>Rocky Mountain Adventure</h3>
-                    <div class="tour-location">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Colorado, USA</span>
-                    </div>
-                    <p class="tour-desc">Hike through breathtaking landscapes, whitewater rafting, and wildlife spotting in America's stunning Rockies.</p>
-                    <div class="tour-meta">
-                        <div class="tour-duration">
-                            <i class="far fa-calendar-alt"></i>
-                            <span>5 Days</span>
-                        </div>
-                        <div class="tour-price">
-                            <i class="fas fa-tag"></i>
-                            <span>$1,599</span>
-                        </div>
-                    </div>
-                    <a href="#" class="btn">Book Now</a>
-                </div>
-            </div>
+            <button class="btn book-now-btn" data-tour-id="{{ tour.id }}">Book Now</button>
         </div>
+    </div>
+    {% endfor %}
+</div>
+
     </section>
 
-    <section class="testimonials">
-        <div class="section-title">
-            <h2>What Our Travelers Say</h2>
-            <p>Hear from our satisfied customers about their unforgettable experiences</p>
-        </div>
+<div class="booking-form-overlay" id="bookingFormOverlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center; z-index:1000;">
+  <div class="booking-form-card" style="background:#fff; padding:30px 40px; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.25); max-width:400px; width:90%; position:relative;">
+    <button class="close-btn" onclick="closeBookingForm()" style="position:absolute; top:12px; right:16px; font-size:24px; cursor:pointer; color:#555; border:none; background:none;">×</button>
+    <form id="bookingForm" method="POST" action="{{ url_for('create_booking') }}">
+        <input type="hidden" name="tour_id" id="formTourId">
+      <label for="fullName">Full Name</label>
+      <input type="text" id="fullName" name="full_name" required style="width:100%; padding:8px 10px; margin-top:5px; border-radius:5px; border:1px solid #ccc;">
 
-        <div class="testimonial-grid">
-            <div class="testimonial-card">
-                <i class="fas fa-quote-left"></i>
-                <p class="testimonial-text">The Bali cultural tour exceeded all expectations. The guides were knowledgeable and the itinerary was perfectly balanced between activities and free time.</p>
-                <div class="testimonial-author">- Sarah Johnson</div>
-            </div>
-            <div class="testimonial-card">
-                <i class="fas fa-quote-left"></i>
-                <p class="testimonial-text">Our African safari was the trip of a lifetime! We saw all the Big Five and the accommodations were luxurious yet authentic. Highly recommend!</p>
-                <div class="testimonial-author">- Michael Chen</div>
-            </div>
-            <div class="testimonial-card">
-                <i class="fas fa-quote-left"></i>
-                <p class="testimonial-text">Wanderlust made our European honeymoon seamless. Every detail was taken care of, allowing us to simply enjoy each magical moment together.</p>
-                <div class="testimonial-author">- Emily & David Rodriguez</div>
-            </div>
-        </div>
-    </section>
+      <label for="email" style="margin-top:15px;">Email</label>
+      <input type="email" id="email" name="email" required style="width:100%; padding:8px 10px; margin-top:5px; border-radius:5px; border:1px solid #ccc;">
+
+      <label for="phone" style="margin-top:15px;">Phone Number</label>
+      <input type="tel" id="phone" name="phone_number" required style="width:100%; padding:8px 10px; margin-top:5px; border-radius:5px; border:1px solid #ccc;">
+
+      <!-- <label for="travelers" style="margin-top:15px;">Number of Travelers</label>
+      <select id="travelers" name="travelers" required style="width:100%; padding:8px 10px; margin-top:5px; border-radius:5px; border:1px solid #ccc;">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+
+      <label for="startDate" style="margin-top:15px;">Start Date</label>
+      <input type="date" id="startDate" name="start_date" required style="width:100%; padding:8px 10px; margin-top:5px; border-radius:5px; border:1px solid #ccc;">
+
+      <label for="endDate" style="margin-top:15px;">End Date</label>
+      <input type="date" id="endDate" name="end_date" required style="width:100%; padding:8px 10px; margin-top:5px; border-radius:5px; border:1px solid #ccc;"> -->
+
+      <button type="submit" class="submit-btn" style="margin-top:20px; width:100%; padding:10px; background:#007BFF; border:none; color:#fff; font-weight:700; border-radius:6px; cursor:pointer;">Book Now</button>
+    </form>
+  </div>
+</div>
+
+
 
     <section class="newsletter">
         <div class="section-title">
@@ -685,12 +609,13 @@
             <div class="footer-col">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="tours.html">Tours</a></li>
-                    <li><a href="destinations.html">Destinations</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
+    <li><a href="{{ url_for('home') }}">Home</a></li>
+    <li><a href="{{ url_for('tours') }}">Tours</a></li>
+    <li><a href="{{ url_for('destinations') }}">Destinations</a></li>
+    <li><a href="{{ url_for('about') }}">About Us</a></li>
+    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+</ul>
+
             </div>
             <div class="footer-col">
                 <h3>Support</h3>
@@ -717,6 +642,10 @@
     </footer>
 
     <script>
+  function closeBookingForm() {
+    document.getElementById('bookingFormOverlay').style.display = 'none';
+  }
+
         // Simple category filter functionality
         document.querySelectorAll('.category-btn').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -725,6 +654,30 @@
                 // Here you would add actual filtering logic
             });
         });
+
+function openBookingForm() {
+  document.getElementById('bookingFormOverlay').style.display = 'flex';
+}
+
+function closeBookingForm() {
+  document.getElementById('bookingFormOverlay').style.display = 'none';
+}
+
+
+  document.querySelectorAll('.book-now-btn').forEach(button => {
+    button.addEventListener('click', function () {
+      const tourId = this.getAttribute('data-tour-id');
+      document.getElementById('formTourId').value = tourId;
+      document.getElementById('bookingFormOverlay').style.display = 'flex';
+    });
+  });
+
+  function closeBookingForm() {
+    document.getElementById('bookingFormOverlay').style.display = 'none';
+  }
+
+
+
     </script>
 </body>
 
